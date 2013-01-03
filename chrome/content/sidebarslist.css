@@ -1,0 +1,61 @@
+@namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
+
+/* Hide original label */
+.sidebarsList-originalTitle {
+	display: none;
+}
+.sidebarsList-reload {
+	padding: 0 !important;
+	margin: 0 3px !important;
+}
+.sidebarsList-reload:not([loading="true"]) {
+	list-style-image: url("icons16.png");
+	-moz-image-region: rect(0 16px 16px 0);
+}
+.sidebarsList-reload:not([loading="true"]):not(:active):hover {
+	opacity: 0.85;
+}
+
+/* Special styles */
+.sidebarsList-reload:not([loading="true"]):-moz-lwtheme-darktext {
+	-moz-image-region: rect(0 32px 16px 16px);
+}
+.sidebarsList-reload:not([loading="true"]):-moz-lwtheme-brighttext {
+	-moz-image-region: rect(0 48px 16px 32px);
+}
+/* Override using extensions.sidebarslist.reloadButtonStyle preference */
+.sidebarsList-reload:not([loading="true"])[sidebarslist_style="colorful"] {
+	-moz-image-region: rect(0 16px 16px 0);
+}
+.sidebarsList-reload:not([loading="true"])[sidebarslist_style="black"] {
+	-moz-image-region: rect(0 32px 16px 16px);
+}
+.sidebarsList-reload:not([loading="true"])[sidebarslist_style="white"] {
+	-moz-image-region: rect(0 48px 16px 32px);
+}
+
+#sidebarsList-sidebarToContent {
+	list-style-image: url("icons16.png");
+	-moz-image-region: rect(16px 32px 32px 16px);
+}
+#sidebarsList-contentToSidebar {
+	list-style-image: url("icons16.png");
+	-moz-image-region: rect(16px 16px 32px 0);
+}
+#sidebarsList-sidebarToContent[disabled="true"] .menu-iconic-icon,
+#sidebarsList-contentToSidebar[disabled="true"] .menu-iconic-icon {
+	opacity: 0.32;
+}
+#sidebarsList-splitter {
+	cursor: pointer;
+	min-width: 0 !important;
+	max-width: 128px !important;
+}
+
+menuitem[sidebarslist_currentpos="false"] {
+	font-style: italic;
+}
+menuitem[sidebarslist_notstd="true"] {
+	color: -moz-hyperlinktext;
+	color: -moz-nativehyperlinktext;
+}

@@ -1,0 +1,7 @@
+content sidebarslist jar:chrome/sidebarslist.jar!/content/
+overlay chrome://browser/content/browser.xul chrome://sidebarslist/content/sidebarslist.xul application={ec8030f7-c20a-464f-9b0e-13a3a9e97384} appversion<4.0a1pre
+
+skin sidebarslist-icon classic/1.0 ./
+
+locale  sidebarslist en-US jar:chrome/sidebarslist.jar!/locale/en-US/
+locale  sidebarslist ru    jar:chrome/sidebarslist.jar!/locale/ru/
