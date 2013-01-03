@@ -167,7 +167,6 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		this.removeSidebarWidthLimits();
 		if(!hidden)
 			this.saveCurrentURI();
-		this._log("Sidebar header created!");
 	},
 	sbWidthLimitsRemoved: false,
 	removeSidebarWidthLimits: function() {
@@ -306,7 +305,6 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		if(!collapsable ^ this.sbCollapsable)
 			return;
 		this.sbCollapsable = collapsable;
-		this._log("setCollapsableSidebar(" + collapsable + ")");
 
 		//~ todo: MultiSidebar support ?
 		var sbBox = this.sbBox;
@@ -402,7 +400,6 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 			return;
 		if(sb.webProgress.isLoadingDocument) { //?
 			var _this = this;
-			this._log("Wait for web-panels.xul loading...");
 			sb.addEventListener("load", function loader() {
 				sb.removeEventListener(e.type, loader, false);
 				_this.setCollapsableWebPanel(collapsable);
@@ -418,7 +415,6 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 			cw.sidebarsListCollapsable = true;
 		else
 			delete cw.sidebarsListCollapsable;
-		this._log("setCollapsableWebPanel(" + collapsable + ")");
 		if(collapsable) {
 			var wpBrowser = cw.document.getElementById("web-panels-browser");
 			this.wrapFunction(cw, "loadWebPanel", function(uri) {
@@ -638,8 +634,6 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		popup.appendChild(df);
 
 		this.setDisableChecked();
-
-		this._log("Popup initialized!");
 	},
 	destroyPopup: function(force) {
 		var popup = this.popup;
@@ -754,16 +748,13 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 			if(!this.popupParent)
 				this.popupParent = parent;
 			newParent.appendChild(popup);
-			this._log("Append popup to " + newParent.nodeName + "#" + newParent.id);
 		}
 	},
 	restorePopup: function() {
 		var popup = this.popup;
 		var parent = this.popupParent;
-		if(parent && popup.parentNode != parent) {
+		if(parent && popup.parentNode != parent)
 			parent.appendChild(popup);
-			this._log("Append popup to original parent");
-		}
 	},
 	createSplitter: function() {
 		var sbSplitter = this.sbSplitter = document.createElement("splitter");
@@ -1301,7 +1292,6 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 			closeMenus(this.popup);
 	},
 	selectSidebar: function() {
-		this._log("selectSidebar()");
 		var popup = this.popup;
 		var spl = this.sbSplitter;
 		this.ensurePopupPosition();
