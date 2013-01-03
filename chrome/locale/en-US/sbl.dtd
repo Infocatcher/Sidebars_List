@@ -1,0 +1,4 @@
+<!ENTITY sbl.disableOpened "Disable menu items for opened sidebars">
+<!ENTITY sbl.collapseSidebar "Collapse sidebar (instead of close)">
+<!ENTITY sbl.splitterWidth "Splitter width">
+<!ENTITY sbl.splitterWidthMaximizedWindow "Splitter width in maximized window">
