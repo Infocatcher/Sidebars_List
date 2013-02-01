@@ -214,9 +214,8 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		this.unwrapFunction(window, "asyncOpenWebPanel");
 	},
 	// Do some magic to restore third party wrappers from other extensions
-	wrapFunction: function(obj, meth, callBefore, win) {
-		if(!win)
-			win = window;
+	wrapFunction: function(obj, meth, callBefore) {
+		var win = this.getGlobalForObject(obj);
 		var key = "sidebarsListMod::" + meth;
 		var orig, wrapped;
 		var isOwn = Object.hasOwnProperty.call(obj, meth);
@@ -248,9 +247,8 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		callBefore.__wrapped = wrapped;
 		callBefore.__isOwn = isOwn;
 	},
-	unwrapFunction: function(obj, meth, win) {
-		if(!win)
-			win = window;
+	unwrapFunction: function(obj, meth) {
+		var win = this.getGlobalForObject(obj);
 		var key = "sidebarsListMod::" + meth;
 		if(!(key in win))
 			return;
@@ -275,6 +273,19 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 			this.defineProperty(o, p, d);
 		else
 			delete o[p];
+	},
+	getGlobalForObject: function(o) {
+		if("getGlobalForObject" in Components.utils)
+			return Components.utils.getGlobalForObject(o);
+		try {
+			var global = o.valueOf.call(null);
+			if(global && global instanceof Components.interfaces.nsIDOMWindow)
+				return global;
+		}
+		catch(e) {
+			Components.utils.reportError(e);
+		}
+		return null;
 	},
 	isNativeFunction: function(func) {
 		// Example: function alert() {[native code]}
@@ -428,10 +439,10 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 			var wpBrowser = cw.document.getElementById("web-panels-browser");
 			this.wrapFunction(cw, "loadWebPanel", function(uri) {
 				return uri == wpBrowser.currentURI.spec;
-			}, cw);
+			});
 		}
 		else {
-			this.unwrapFunction(cw, "loadWebPanel", cw);
+			this.unwrapFunction(cw, "loadWebPanel");
 		}
 	},
 
