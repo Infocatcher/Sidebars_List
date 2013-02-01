@@ -219,6 +219,7 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 			win = window;
 		var key = "sidebarsListMod::" + meth;
 		var orig, wrapped;
+		var isOwn = Object.hasOwnProperty.call(obj, meth);
 		if(!(key in win)) {
 			orig = obj[meth];
 			wrapped = obj[meth] = function sidebarsListWrapper() {
@@ -243,6 +244,7 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		win[key] = callBefore;
 		callBefore.__orig = orig;
 		callBefore.__wrapped = wrapped;
+		callBefore.__isOwn = isOwn;
 	},
 	unwrapFunction: function(obj, meth, win) {
 		if(!win)
@@ -255,7 +257,10 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 			win[key] = function() {};
 		else {
 			delete win[key];
-			obj[meth] = callBefore.__orig;
+			if(callBefore.__isOwn)
+				obj[meth] = callBefore.__orig;
+			else
+				delete obj[meth];
 		}
 	},
 	overrideProperty: function(o, p, d) {
