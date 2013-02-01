@@ -214,9 +214,9 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		this.unwrapFunction(window, "asyncOpenWebPanel");
 	},
 	// Do some magic to restore third party wrappers from other extensions
-	wrapFunction: function(obj, meth, callBefore) {
+	wrapFunction: function(obj, meth, callBefore, prefix) {
 		var win = this.getGlobalForObject(obj);
-		var key = "sidebarsListMod::" + meth;
+		var key = "sidebarsListMod::" + (prefix || "") + meth;
 		var orig, wrapped;
 		var isOwn = Object.hasOwnProperty.call(obj, meth);
 		if(!(key in win)) {
@@ -247,9 +247,9 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		callBefore.__wrapped = wrapped;
 		callBefore.__isOwn = isOwn;
 	},
-	unwrapFunction: function(obj, meth) {
+	unwrapFunction: function(obj, meth, prefix) {
 		var win = this.getGlobalForObject(obj);
-		var key = "sidebarsListMod::" + meth;
+		var key = "sidebarsListMod::" + (prefix || "") + meth;
 		if(!(key in win))
 			return;
 		var callBefore = win[key];
@@ -349,7 +349,7 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 					attrVal == "about:blank"
 					|| attrVal == sb.getAttribute(attrName)
 				);
-			});
+			}, "sidebar.");
 			// See toggleSidebar() function in Firefox 17+ (chrome://browser/content/browser.js)
 			if(sb.docShell && "createAboutBlankContentViewer" in sb.docShell) {
 				var ds = "create" in Object
@@ -376,7 +376,7 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		else {
 			var hidden = sbBox.hidden;
 			this.restoreProperty(sbBox, "hidden", this._origSBHidden);
-			this.unwrapFunction(sb, "setAttribute");
+			this.unwrapFunction(sb, "setAttribute", "sidebar.");
 			if("_origSBDocShell" in this) {
 				this.restoreProperty(sb, "docShell", this._origSBDocShell);
 				delete this._origSBDocShell;
