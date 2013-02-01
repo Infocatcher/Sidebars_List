@@ -344,17 +344,11 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 				configurable: true,
 				enumerable: true
 			});
-			this._origSBSetAttribute = this.overrideProperty(sb, "setAttribute", {
-				value: function(attrName, attrVal) {
-					if(attrName != "src" || attrVal != this.getAttribute(attrName) && attrVal != "about:blank") {
-						var p = "getPrototypeOf" in Object
-							? Object.getPrototypeOf(this)
-							: this.__proto__;
-						p.setAttribute.apply(this, arguments);
-					}
-				},
-				configurable: true,
-				enumerable: true
+			this.wrapFunction(sb, "setAttribute", function(attrName, attrVal) {
+				return attrName == "src" && (
+					attrVal == "about:blank"
+					|| attrVal == sb.getAttribute(attrName)
+				);
 			});
 			// See toggleSidebar() function in Firefox 17+ (chrome://browser/content/browser.js)
 			if(sb.docShell && "createAboutBlankContentViewer" in sb.docShell) {
@@ -382,12 +376,12 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		else {
 			var hidden = sbBox.hidden;
 			this.restoreProperty(sbBox, "hidden", this._origSBHidden);
-			this.restoreProperty(sb, "setAttribute", this._origSBSetAttribute);
+			this.unwrapFunction(sb, "setAttribute");
 			if("_origSBDocShell" in this) {
 				this.restoreProperty(sb, "docShell", this._origSBDocShell);
 				delete this._origSBDocShell;
 			}
-			this._origSBHidden = this._origSBSetAttribute = null;
+			this._origSBHidden = null;
 
 			sbBox.hidden = hidden;
 			sbBox.collapsed = false;
