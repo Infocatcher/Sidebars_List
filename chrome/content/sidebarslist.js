@@ -227,19 +227,21 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 					return undefined;
 				return orig.apply(this, arguments);
 			};
-			// Someone may want to do eval() patch...
-			var patch = function(s) {
-				return s.replace(
-					"{",
-					'{\n\tif(window["' + key + '"].apply(top.sidebarsList || window, arguments)) return;\n'
-				);
-			};
-			wrapped.toString = function() {
-				return patch(orig.toString());
-			};
-			wrapped.toSource = function() {
-				return patch(orig.toSource());
-			};
+			if(!this.isNativeFunction(orig)) {
+				// Someone may want to do eval() patch...
+				var patch = function(s) {
+					return s.replace(
+						"{",
+						'{\n\tif(window["' + key + '"].apply(top.sidebarsList || window, arguments)) return;\n'
+					);
+				};
+				wrapped.toString = function() {
+					return patch(orig.toString());
+				};
+				wrapped.toSource = function() {
+					return patch(orig.toSource());
+				};
+			}
 		}
 		win[key] = callBefore;
 		callBefore.__orig = orig;
@@ -273,6 +275,10 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 			this.defineProperty(o, p, d);
 		else
 			delete o[p];
+	},
+	isNativeFunction: function(func) {
+		// Example: function alert() {[native code]}
+		return /\[native code\]\s*\}$/.test(Function.toString.call(func));
 	},
 	getOwnPropertyDescriptor: function(o, p) {
 		if(!("getOwnPropertyDescriptor" in Object)) { // Firefox < 4
