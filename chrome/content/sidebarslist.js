@@ -259,40 +259,38 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		}
 	},
 	overrideProperty: function(o, p, d) {
-		if(!("getOwnPropertyDescriptor" in Object)) { // Firefox < 4
-			var od = Object.hasOwnProperty.call(o, p) && {
-				value: o[p],
-				get: Object.__lookupGetter__.call(o, p),
-				set: Object.__lookupSetter__.call(o, p)
-			};
-			if(d.hasOwnProperty("value"))
-				d.get = function() { return d.value; };
-			d.get && Object.__defineGetter__.call(o, p, d.get);
-			d.set && Object.__defineSetter__.call(o, p, d.set);
-			return od;
-		}
-		var od = Object.getOwnPropertyDescriptor(o, p);
-		Object.defineProperty(o, p, d);
+		var od = this.getOwnPropertyDescriptor(o, p);
+		this.defineProperty(o, p, d);
 		return od;
 	},
 	restoreProperty: function(o, p, d) {
-		if(!("defineProperty" in Object)) {  // Firefox < 4
-			if(d) {
-				d.get && Object.__defineGetter__.call(o, p, d.get);
-				d.set && Object.__defineSetter__.call(o, p, d.set);
-				if(!d.get)
-					o[p] = d.value;
-			}
-			else
-				delete o[p];
-			return;
-		}
 		if(d)
-			Object.defineProperty(o, p, d);
+			this.defineProperty(o, p, d);
 		else
 			delete o[p];
 	},
-
+	getOwnPropertyDescriptor: function(o, p) {
+		if(!("getOwnPropertyDescriptor" in Object)) { // Firefox < 4
+			return Object.hasOwnProperty.call(o, p) && {
+				value: o[p],
+				get: Object.__lookupGetter__.call(o, p),
+				set: Object.__lookupSetter__.call(o, p)
+			} || undefined;
+		}
+		return Object.getOwnPropertyDescriptor(o, p);
+	},
+	defineProperty: function(o, p, d) {
+		if(!("defineProperty" in Object)) {  // Firefox < 4
+			if(!d)
+				throw new TypeError("value is not a non-null object");
+			d.get && Object.__defineGetter__.call(o, p, d.get);
+			d.set && Object.__defineSetter__.call(o, p, d.set);
+			if(!d.get)
+				o[p] = d.value;
+			return;
+		}
+		Object.defineProperty(o, p, d);
+	},
 
 	get collapseSidebar() {
 		return this.pref("collapseSidebar");
