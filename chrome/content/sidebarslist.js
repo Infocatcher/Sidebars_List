@@ -478,18 +478,7 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 				this.disableNode(node, disable);
 			}, this);
 	},
-	get maxSplitterWidth() {
-		var spl = this.sbSplitter;
-		var maxWidth = parseInt(
-			spl.ownerDocument.defaultView
-				.getComputedStyle(spl, null)
-				.maxWidth
-		);
-		if(!maxWidth)
-			return 128;
-		delete this.maxSplitterWidth;
-		return this.maxSplitterWidth = maxWidth;
-	},
+	maxSplitterWidth: 128,
 	setSplitterWidth: function() {
 		var state = this._lastWindowState = window.windowState;
 		var prefName = state == window.STATE_NORMAL
