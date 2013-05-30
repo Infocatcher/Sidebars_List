@@ -35,6 +35,16 @@
 
 		<em:localized>
 			<Description>
+				<em:locale>en-US</em:locale>
+				<em:name>Sidebars List</em:name>
+				<em:description>Adds drop-down list to switch sidebars</em:description>
+				<em:creator>Infocatcher</em:creator>
+				<em:contributor>Farm-fresh icons (http://www.fatcow.com/free-icons)</em:contributor>
+			</Description>
+		</em:localized>
+
+		<em:localized>
+			<Description>
 				<em:locale>ru</em:locale>
 				<em:name>Sidebars List</em:name>
 				<em:description>Добавляет выпадающий список для быстрого переключения боковых панелей</em:description>
