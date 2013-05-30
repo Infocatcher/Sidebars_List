@@ -80,6 +80,7 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		this.removeSidebarWidthLimits(false);
 		this.removeSbWrappers();
 		this.setCollapsableSidebar(false);
+		this.fixSidebarZoom(false);
 		this.cleanupNodes();
 
 		delete window.sidebarsList;
@@ -166,8 +167,12 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 				break;
 		}
 		this.removeSidebarWidthLimits();
-		if(!hidden)
+		if(!hidden) {
 			this.saveCurrentURI();
+			setTimeout(function(_this) {
+				_this.fixSidebarZoom();
+			}, 0, this);
+		}
 	},
 	sbWidthLimitsRemoved: false,
 	removeSidebarWidthLimits: function(rmv) {
@@ -189,6 +194,63 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		}
 	},
 
+	sbZoomFixed: false,
+	fixSidebarZoom: function(fix) {
+		if(fix === undefined)
+			fix = this.pref("fixSidebarZoom");
+		if(!fix ^ this.sbZoomFixed)
+			return;
+		this.sbZoomFixed = fix;
+		// Known issue: doesn't work for Ctrl+mouse wheel
+		//this._log("fixSidebarZoom(" + fix + ")");
+		var zm = "ZoomManager" in window && ZoomManager;
+		if(!zm || !("setZoomForBrowser" in zm))
+			return;
+		if(!fix) {
+			this.unwrapFunction(zm, "getZoomForBrowser");
+			this.unwrapFunction(zm, "setZoomForBrowser");
+			return;
+		}
+		this.wrapFunction(zm, "getZoomForBrowser", function(browser) {
+			if(!browser || this.isWebPanelBrowser(browser) || !this.isZoomCommand())
+				return false;
+			var wpBrowser = this.getWebPanelBrowser();
+			if(!wpBrowser)
+				return false;
+			var res = ZoomManager.getZoomForBrowser(wpBrowser);
+			return { value: res };
+		});
+		this.wrapFunction(zm, "setZoomForBrowser", function(browser, zoom) {
+			if(!browser || this.isWebPanelBrowser(browser) || !this.isZoomCommand())
+				return false;
+			var wpBrowser = this.getWebPanelBrowser();
+			if(!wpBrowser)
+				return false;
+			var res = ZoomManager.setZoomForBrowser(wpBrowser, zoom);
+			return { value: res };
+		});
+	},
+	isWebPanelBrowser: function(browser) {
+		return browser && browser.id == "web-panels-browser";
+	},
+	getWebPanelBrowser: function() {
+		var fw = document.commandDispatcher.focusedWindow;
+		if(!fw)
+			return null;
+		fw = fw.top;
+		var dwu = Components.classes["@mozilla.org/inspector/dom-utils;1"]
+			.getService(Components.interfaces.inIDOMUtils);
+		var fwBrowser = dwu.getParentForNode(fw.document, true);
+		if(this.isWebPanelBrowser(fwBrowser))
+			return fwBrowser;
+		return null;
+	},
+	isZoomCommand: function() {
+		var stack = new Error().stack;
+		//this._log("isZoomCommand()\n" + stack);
+		return stack.indexOf("\nFullZoom_onLocationChange@chrome://browser/content/browser.js:") == -1;
+	},
+
 	addSbWrappers: function() {
 		this.wrapFunction(window, "toggleSidebar", function(commandId, forceOpen) {
 			if(commandId)
@@ -205,9 +267,11 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		this.wrapFunction(window, "openWebPanel", function(aTitle, aURI) {
 			this.saveURI(aURI, aTitle || "");
 			this.setCollapsableWebPanel();
+			this.fixSidebarZoom();
 		});
 		this.wrapFunction(window, "asyncOpenWebPanel", function() {
 			this.setCollapsableWebPanel();
+			this.fixSidebarZoom();
 		});
 	},
 	removeSbWrappers: function() {
@@ -525,7 +589,8 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 			case "splitterWidthMaximizedWindow": this.setSplitterWidth();          break;
 			case "collapseSidebar":              this.setCollapsableSidebar(pVal); break;
 			case "reloadButtonStyle":            this.updateControlsStyle();       break;
-			case "removeWidthLimits":            this.removeSidebarWidthLimits();
+			case "removeWidthLimits":            this.removeSidebarWidthLimits();  break;
+			case "fixSidebarZoom":               this.fixSidebarZoom();
 		}
 	},
 

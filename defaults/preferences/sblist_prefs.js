@@ -10,6 +10,7 @@ pref("extensions.sidebarslist.splitterWidthMaximizedWindow", 4);
 pref("extensions.sidebarslist.defaultSidebarWidth", 240); // Double click on splitter/resizer to set this width
 pref("extensions.sidebarslist.collapseSidebar", false); // Don't close sidebar: show the same state after reopen
 pref("extensions.sidebarslist.removeWidthLimits", true);
+pref("extensions.sidebarslist.fixSidebarZoom", true);
 pref("extensions.sidebarslist.closeSidebarsMenu", true);
 pref("extensions.sidebarslist.reloadButtonStyle", "auto");
 // See styles for [sidebarslist_style="..."] in chrome://sidebarslist/content/sidebarslist.css
