@@ -224,8 +224,9 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		if(!(key in win)) {
 			orig = obj[meth];
 			wrapped = obj[meth] = function sidebarsListWrapper() {
-				if(win[key].apply(window.sidebarsList, arguments))
-					return undefined;
+				var ret = win[key].apply(window.sidebarsList, arguments);
+				if(ret)
+					return typeof ret == "object" ? ret.value : undefined;
 				return orig.apply(this, arguments);
 			};
 			if(!this.isNativeFunction(orig)) {
@@ -233,7 +234,9 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 				var patch = function(s) {
 					return s.replace(
 						"{",
-						'{\n\tif(window["' + key + '"].apply(top.sidebarsList || window, arguments)) return;\n'
+						'{\n'
+						+ '\tvar _sblRet = window["' + key + '"].apply(top.sidebarsList || window, arguments);\n'
+						+ '\tif(_sblRet) return typeof _sblRet == "object" ? _sblRet.value : undefined;\n'
 					);
 				};
 				wrapped.toString = function() {
