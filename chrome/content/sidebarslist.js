@@ -25,7 +25,7 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		document.insertBefore(style, document.documentElement);
 
 		this.multiSb = "MultiSidebar" in window;
-		this.tweakSidebar(); // this.sbBox.hidden is always hidden here?
+		this.tweakSidebar(); // this.sbBox.hidden is always true here?
 	},
 	init: function() {
 		window.removeEventListener("load", this, false);
@@ -77,6 +77,7 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 			}
 		}
 
+		this.removeSidebarWidthLimits(false);
 		this.removeSbWrappers();
 		this.setCollapsableSidebar(false);
 		this.cleanupNodes();
@@ -169,8 +170,9 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 			this.saveCurrentURI();
 	},
 	sbWidthLimitsRemoved: false,
-	removeSidebarWidthLimits: function() {
-		var rmv = this.pref("removeWidthLimits");
+	removeSidebarWidthLimits: function(rmv) {
+		if(rmv === undefined)
+			rmv = this.pref("removeWidthLimits");
 		if(!rmv ^ this.sbWidthLimitsRemoved)
 			return;
 		this.sbWidthLimitsRemoved = rmv;
