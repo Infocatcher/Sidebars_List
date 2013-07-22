@@ -1,4 +1,6 @@
 <!ENTITY sbl.disableOpened "Disable menu items for opened sidebars">
 <!ENTITY sbl.collapseSidebar "Collapse sidebar (instead of close)">
+<!-- Used label for "contentToSidebar" from sbl.properties -->
+<!ENTITY sbl.openTabInSidebarClosesTab "“Open Tab in Sidebar” also closes that tab">
 <!ENTITY sbl.splitterWidth "Splitter width">
 <!ENTITY sbl.splitterWidthMaximizedWindow "Splitter width in maximized window">

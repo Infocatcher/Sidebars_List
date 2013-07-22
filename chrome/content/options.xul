@@ -3,6 +3,7 @@
 <vbox xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 	<setting pref="extensions.sidebarslist.disableOpened" type="bool" title="&sbl.disableOpened;"/>
 	<setting pref="extensions.sidebarslist.collapseSidebar" type="bool" title="&sbl.collapseSidebar;"/>
+	<setting pref="extensions.sidebarslist.openTabInSidebarClosesTab" type="bool" title="&sbl.openTabInSidebarClosesTab;"/>
 	<setting pref="extensions.sidebarslist.splitterWidth" type="integer" title="&sbl.splitterWidth;"/>
 	<setting pref="extensions.sidebarslist.splitterWidthMaximizedWindow" type="integer" title="&sbl.splitterWidthMaximizedWindow;"/>
 </vbox>

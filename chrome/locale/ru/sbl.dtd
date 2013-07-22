@@ -1,4 +1,6 @@
 <!ENTITY sbl.disableOpened "Отключать пункты меню для открытых боковых панелей">
 <!ENTITY sbl.collapseSidebar "Сворачивать боковую панель (вместо закрытия)">
+<!-- Used label for "contentToSidebar" from sbl.properties -->
+<!ENTITY sbl.openTabInSidebarClosesTab "«Открыть вкладку в боковой панели» также закрывает эту вкладку">
 <!ENTITY sbl.splitterWidth "Ширина переключателя">
 <!ENTITY sbl.splitterWidthMaximizedWindow "Ширина переключателя в развернутом окне">
