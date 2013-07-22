@@ -28,3 +28,5 @@ pref("extensions.sidebarslist.key.reloadSidebarSkipCache", "");
 pref("extensions.sidebarslist.key.stopSidebar", "");
 
 pref("extensions.sidebarslist.prefsVersion", 0);
+
+pref("extensions.sidebarslist.debug", false);

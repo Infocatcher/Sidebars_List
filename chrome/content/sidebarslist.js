@@ -1443,7 +1443,8 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 	},
 
 	_log: function() {
-		//return this._log = function() {};
+		if(!this.pref("debug"))
+			return;
 		var cs = Components.classes["@mozilla.org/consoleservice;1"]
 			.getService(Components.interfaces.nsIConsoleService);
 		function ts() {
@@ -1452,7 +1453,8 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 			return d.toLocaleFormat("%M:%S:") + "000".substr(String(ms).length) + ms;
 		}
 		this._log = function() {
-			cs.logStringMessage("[Sidebars List]: " + ts() + " " + Array.map(arguments, String).join("\n"));
+			if(this.pref("debug"))
+				cs.logStringMessage("[Sidebars List]: " + ts() + " " + Array.map(arguments, String).join("\n"));
 		};
 		return this._log.apply(this, arguments);
 	}
