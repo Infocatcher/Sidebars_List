@@ -1318,7 +1318,7 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		}
 		else {
 			this.setTargetSidebar("viewWebPanelsSidebar");
-			openWebPanel(content.document.title, url);
+			openWebPanel(content.document.title || url, url);
 		}
 		if(this.pref("openTabInSidebarClosesTab")) {
 			var tab = gBrowser.selectedTab;
