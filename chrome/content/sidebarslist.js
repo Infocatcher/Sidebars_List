@@ -1315,10 +1315,18 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 			var mi = mis[0];
 			this.setTargetSidebar(mi.getAttribute("observes"));
 			mi.doCommand();
-			return;
 		}
-		this.setTargetSidebar("viewWebPanelsSidebar");
-		openWebPanel(content.document.title, url);
+		else {
+			this.setTargetSidebar("viewWebPanelsSidebar");
+			openWebPanel(content.document.title, url);
+		}
+		if(this.pref("openTabInSidebarClosesTab")) {
+			var tab = gBrowser.selectedTab;
+			var tabs = gBrowser.visibleTabs || gBrowser.tabs;
+			if(tabs.length <= 1)
+				gBrowser.selectedTab = gBrowser.addTab("about:blank", { skipAnimation: true });
+			gBrowser.removeTab(tab);
+		}
 	},
 	setTargetSidebar: function(cmd) {
 		if(!cmd || !this.multiSb)
