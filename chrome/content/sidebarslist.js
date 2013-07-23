@@ -565,17 +565,35 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		var win = spl.ownerDocument.defaultView;
 		var stl = spl.style;
 
-		stl.removeProperty("border-left-width");
-		stl.removeProperty("border-right-width");
-		var cs = win.getComputedStyle(spl, null);
-		var borderLeft  = parseInt(cs.borderLeftWidth);
-		var borderRight = parseInt(cs.borderRightWidth);
+		if(w <= 0) { // "width: 0" may not work on Linux with "-moz-appearance: splitter"
+			stl.setProperty("visibility",  "collapse", "important");
+			return;
+		}
 
-		stl.setProperty("width", w + "px", "important");
+		if(spl.hasAttribute("style"))
+			spl.removeAttribute("style");
+		stl.setProperty("width",     w + "px", "important");
+		stl.setProperty("max-width", w + "px", "important");
+
+		var cs = win.getComputedStyle(spl, null);
+		var borderLeft  = parseFloat(cs.borderLeftWidth);
+		var borderRight = parseFloat(cs.borderRightWidth);
 		if(w < borderLeft + borderRight) {
-			borderLeft = borderRight = Math.floor(w/2);
+			borderLeft  = Math.floor(w/2);
+			borderRight = w - borderLeft;
 			stl.setProperty("border-left-width",  borderLeft  + "px", "important");
 			stl.setProperty("border-right-width", borderRight + "px", "important");
+		}
+
+		var realW = parseFloat(cs.width);
+		if(realW > w) {
+			var dw = Math.round(realW - w);
+			var dwl = Math.floor(dw/2);
+			var dwr = dw - dwl;
+			var marginLeft  = parseFloat(cs.marginLeft)  - dwl;
+			var marginRight = parseFloat(cs.marginRight) - dwr;
+			stl.setProperty("margin-left",  marginLeft  + "px", "important");
+			stl.setProperty("margin-right", marginRight + "px", "important");
 		}
 	},
 	sizeModeChanged: function(e) {
