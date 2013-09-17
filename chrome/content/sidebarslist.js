@@ -1474,7 +1474,7 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 			if(this.pref("debug"))
 				cs.logStringMessage("[Sidebars List]: " + ts() + " " + Array.map(arguments, String).join("\n"));
 		};
-		return this._log.apply(this, arguments);
+		this._log.apply(this, arguments);
 	}
 };
 
