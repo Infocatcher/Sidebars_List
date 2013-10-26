@@ -25,7 +25,6 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		document.insertBefore(style, document.documentElement);
 
 		this.multiSb = "MultiSidebar" in window;
-		this.tweakSidebar(); // this.sbBox.hidden is always true here?
 	},
 	init: function() {
 		window.removeEventListener("load", this, false);
@@ -33,10 +32,18 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 
 		this.createSplitter();
 		this.tweakSidebar();
-		this.addSbWrappers();
 		this.registerHotkeys();
 
 		this.popup.addEventListener("popupshowing", this, true);
+
+		setTimeout(function(_this) {
+			_this.delayedInit();
+		}, 0, this);
+	},
+	delayedInit: function() {
+		this.addSbWrappers();
+		if(!this._sidebarHeaderCreated && !this.sbBox.hidden)
+			this.tweakSidebar();
 	},
 	destroy: function(force) {
 		window.removeEventListener("unload", this, false);
@@ -257,7 +264,7 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 				this.tweakSidebar(true);
 			if(!forceOpen && (!commandId || this.sbBox.getAttribute("sidebarcommand") == commandId))
 				this.saveCurrentURI(); // To save new web panel location
-			// Note: Firefox are buggy itself with web panels
+			// Note: Firefox is buggy itself with web panels
 			if(!commandId || commandId == "viewWebPanelsSidebar")
 				return;
 			var mi = this.popup.getElementsByAttribute("observes", commandId)[0];
@@ -671,7 +678,7 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		var val = ttl.value;
 		tbb.setAttribute("label", ttl.value);
 
-		document.persist(ttl.id, "value"); // Firefox bug: title of web panel aren't restored
+		document.persist(ttl.id, "value"); // Firefox bug: title of web panel isn't restored
 		// Firefox bug: restored title of web panel may disappears...
 		// Cen be reproduced in Firefox 10.0.11
 		val && setTimeout(function() {
@@ -1446,7 +1453,7 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 			keyElt.id = "sidebarsList-key-" + kId;
 			keyElt.setAttribute("oncommand", keys[kId]);
 			var keyStr = this.pref("key." + kId);
-			if(!keyStr) // Attribute key="key-node-id" are buggy, if one of key nodes aren't exist
+			if(!keyStr) // Attribute key="key-node-id" is buggy, if one of key nodes isn't exist
 				keyElt.setAttribute("disabled", "true");
 			else {
 				var tokens = keyStr.split(" ");
