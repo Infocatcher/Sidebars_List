@@ -859,6 +859,7 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		sbSplitter.id = "sidebarsList-splitter";
 		sbSplitter.className = "chromeclass-extrachrome";
 		sbSplitter.setAttribute("onclick", "sidebarsList.smartToggleSidebar(event);");
+		sbSplitter.setAttribute("onmouseup", "return false; // Forbid drag-and-drop");
 		sbSplitter.setAttribute("context", this.popupId);
 		sbSplitter.addEventListener("contextmenu", this, true);
 		var sbBox = this.sbBox;
