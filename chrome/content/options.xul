@@ -6,4 +6,5 @@
 	<setting pref="extensions.sidebarslist.openTabInSidebarClosesTab" type="bool" title="&sbl.openTabInSidebarClosesTab;"/>
 	<setting pref="extensions.sidebarslist.splitterWidth" type="integer" title="&sbl.splitterWidth;"/>
 	<setting pref="extensions.sidebarslist.splitterWidthMaximizedWindow" type="integer" title="&sbl.splitterWidthMaximizedWindow;"/>
+	<setting pref="extensions.sidebarslist.splitterWidthFullScreen" type="integer" title="&sbl.splitterWidthFullScreen;"/>
 </vbox>

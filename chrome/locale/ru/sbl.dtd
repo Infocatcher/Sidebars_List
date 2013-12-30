@@ -4,3 +4,4 @@
 <!ENTITY sbl.openTabInSidebarClosesTab "«Открыть вкладку в боковой панели» также закрывает эту вкладку">
 <!ENTITY sbl.splitterWidth "Ширина переключателя">
 <!ENTITY sbl.splitterWidthMaximizedWindow "Ширина переключателя в развернутом окне">
+<!ENTITY sbl.splitterWidthFullScreen "Ширина переключателя в полноэкранном режиме">

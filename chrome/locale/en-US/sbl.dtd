@@ -4,3 +4,4 @@
 <!ENTITY sbl.openTabInSidebarClosesTab "“Open Tab in Sidebar” also closes that tab">
 <!ENTITY sbl.splitterWidth "Splitter width">
 <!ENTITY sbl.splitterWidthMaximizedWindow "Splitter width in maximized window">
+<!ENTITY sbl.splitterWidthFullScreen "Splitter width in full screen mode">
