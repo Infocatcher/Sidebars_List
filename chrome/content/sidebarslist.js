@@ -576,6 +576,7 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		if(_w != w) {
 			w = _w;
 			this.pref(prefName, w);
+			return; // => prefsChanged()
 		}
 
 		var spl = this.sbSplitter;
