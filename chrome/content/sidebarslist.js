@@ -562,9 +562,14 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 	maxSplitterWidth: 128,
 	setSplitterWidth: function() {
 		var state = this._lastWindowState = this.windowState;
-		var prefName = state == window.STATE_NORMAL
-			? "splitterWidth"
-			: "splitterWidthMaximizedWindow";
+		var prefName = "splitterWidth";
+		if(state == window.STATE_MAXIMIZED)
+			prefName += "MaximizedWindow";
+		else if(state == (window.STATE_FULLSCREEN || 4)) {
+			prefName += document.fullScreen || document.mozFullScreen
+				? "FullScreenDOM"
+				: "MaximizedWindow";
+		}
 		var w = this.pref(prefName) || 0;
 
 		var _w = Math.max(0, Math.min(this.maxSplitterWidth, w));
@@ -616,7 +621,8 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		switch(pName) {
 			case "disableOpened":                this.setDisableChecked();         break;
 			case "splitterWidth":
-			case "splitterWidthMaximizedWindow": this.setSplitterWidth();          break;
+			case "splitterWidthMaximizedWindow":
+			case "splitterWidthFullScreenDOM":   this.setSplitterWidth();          break;
 			case "collapseSidebar":              this.setCollapsableSidebar(pVal); break;
 			case "reloadButtonStyle":            this.updateControlsStyle();       break;
 			case "removeWidthLimits":            this.removeSidebarWidthLimits();  break;
