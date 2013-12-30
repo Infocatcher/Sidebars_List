@@ -554,9 +554,14 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 				this.disableNode(node, disable);
 			}, this);
 	},
+	get windowState() {
+		// Note: we have STATE_NORMAL for fullscreen state in Firefox <= 3.6
+		// and we don't have window.STATE_FULLSCREEN in Firefox <= 3.5
+		return window.fullScreen ? window.STATE_FULLSCREEN || 4 : window.windowState;
+	},
 	maxSplitterWidth: 128,
 	setSplitterWidth: function() {
-		var state = this._lastWindowState = window.windowState;
+		var state = this._lastWindowState = this.windowState;
 		var prefName = state == window.STATE_NORMAL
 			? "splitterWidth"
 			: "splitterWidthMaximizedWindow";
@@ -604,7 +609,7 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		}
 	},
 	sizeModeChanged: function(e) {
-		if(window.windowState != this._lastWindowState)
+		if(this.windowState != this._lastWindowState)
 			this.setSplitterWidth();
 	},
 	prefsChanged: function(pName, pVal) {
