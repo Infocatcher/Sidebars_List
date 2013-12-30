@@ -1,6 +1,6 @@
 window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 	prefNS: "extensions.sidebarslist.",
-	prefVer: 1,
+	prefVer: 2,
 
 	origTitles: [],
 	tbButtons: [],
@@ -568,7 +568,7 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		else if(state == (window.STATE_FULLSCREEN || 4)) {
 			prefName += document.fullScreen || document.mozFullScreen
 				? "FullScreenDOM"
-				: "MaximizedWindow";
+				: "FullScreen";
 		}
 		var w = this.pref(prefName) || 0;
 
@@ -622,6 +622,7 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 			case "disableOpened":                this.setDisableChecked();         break;
 			case "splitterWidth":
 			case "splitterWidthMaximizedWindow":
+			case "splitterWidthFullScreen":
 			case "splitterWidthFullScreenDOM":   this.setSplitterWidth();          break;
 			case "collapseSidebar":              this.setCollapsableSidebar(pVal); break;
 			case "reloadButtonStyle":            this.updateControlsStyle();       break;
@@ -1233,6 +1234,9 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 				this.saveURI(unescape(RegExp.$1), unescape(RegExp.$2 || ""));
 			else
 				this.saveURI(unescape(lastURI));
+		}
+		if(v < 2) { //= Added: 2013-12-30
+			this.pref("splitterWidthFullScreen", this.pref("splitterWidthMaximizedWindow"));
 		}
 		this.pref("prefsVersion", this.prefVer);
 		setTimeout(function(_this) {

@@ -7,6 +7,7 @@ pref("extensions.sidebarslist.disableOpened", true);
 pref("extensions.sidebarslist.disableOpened.notStandard", false);
 pref("extensions.sidebarslist.splitterWidth", 8);
 pref("extensions.sidebarslist.splitterWidthMaximizedWindow", 4);
+pref("extensions.sidebarslist.splitterWidthFullScreen", 4); // F11
 pref("extensions.sidebarslist.splitterWidthFullScreenDOM", 0); // Some web application
 pref("extensions.sidebarslist.defaultSidebarWidth", 240); // Double click on splitter/resizer to set this width
 pref("extensions.sidebarslist.collapseSidebar", false); // Don't close sidebar: show the same state after reopen
