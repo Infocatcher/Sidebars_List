@@ -262,6 +262,23 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		this.wrapFunction(window, "toggleSidebar", function(commandId, forceOpen) {
 			if(commandId)
 				this.tweakSidebar(true);
+			else {
+				var cmd = this.sbBox.getAttribute("sidebarcommand");
+				if(!cmd || !document.getElementById(cmd)) {
+					this._log("toggleSidebar(): sidebar broadcaster not found, sidebarcommand = \"" + cmd + "\"");
+					if(!this.sbBox.hidden) {
+						var url = this.sb.currentURI.spec;
+						var mi = this.popup.getElementsByAttribute("sidebarurl", url)[0];
+						if(mi) {
+							var realCmd = mi.getAttribute("observes");
+							if(document.getElementById(realCmd)) {
+								this.sbBox.setAttribute("sidebarcommand", realCmd);
+								this._log("toggleSidebar(): fix sidebar broadcaster: " + realCmd);
+							}
+						}
+					}
+				}
+			}
 			if(!forceOpen && (!commandId || this.sbBox.getAttribute("sidebarcommand") == commandId))
 				this.saveCurrentURI(); // To save new web panel location
 			// Note: Firefox is buggy itself with web panels
