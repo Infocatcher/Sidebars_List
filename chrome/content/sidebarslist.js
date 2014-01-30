@@ -579,6 +579,8 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 	maxSplitterWidth: 128,
 	setSplitterWidth: function() {
 		var state = this._lastWindowState = this.windowState;
+		if(state == window.STATE_MINIMIZED)
+			return;
 		var prefName = "splitterWidth";
 		if(state == window.STATE_MAXIMIZED)
 			prefName += "MaximizedWindow";
