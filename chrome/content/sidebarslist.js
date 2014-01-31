@@ -260,8 +260,13 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 
 	addSbWrappers: function() {
 		this.wrapFunction(window, "toggleSidebar", function(commandId, forceOpen) {
-			if(commandId)
+			if(commandId) {
 				this.tweakSidebar(true);
+				if(this.clearSidebar && commandId != this.lastCommand) {
+					this.clearBrowser(this.sb);
+					this._log("toggleSidebar(): clear sidebar");
+				}
+			}
 			else {
 				var cmd = this.sbBox.getAttribute("sidebarcommand");
 				if(!cmd || !document.getElementById(cmd)) {
@@ -289,6 +294,21 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 				this.saveURI(mi.getAttribute("sidebarurl"));
 		});
 		this.wrapFunction(window, "openWebPanel", function(aTitle, aURI) {
+			if(this.clearSidebar) {
+				var last = this.lastURI;
+				if(!last.isWeb) {
+					this.clearBrowser(this.sb);
+					this._log("openWebPanel(): clear sidebar");
+				}
+				else if(last.uri != aURI) {
+					var wpBrowser = this.sb.contentDocument
+						&& this.sb.contentDocument.getElementById("web-panels-browser");
+					if(wpBrowser) {
+						this.clearBrowser(wpBrowser);
+						this._log("openWebPanel(): clear web panel");
+					}
+				}
+			}
 			this.saveURI(aURI, aTitle || "");
 			this.setCollapsableWebPanel();
 			this.fixSidebarZoom();
@@ -302,6 +322,16 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		this.unwrapFunction(window, "toggleSidebar");
 		this.unwrapFunction(window, "openWebPanel");
 		this.unwrapFunction(window, "asyncOpenWebPanel");
+	},
+	get clearSidebar() {
+		return this.sbCollapsable && this.sbBox.hidden;
+	},
+	clearBrowser: function(br) {
+		if(br.contentDocument) {
+			var root = br.contentDocument.documentElement;
+			if(root)
+				root.style.display = "none";
+		}
 	},
 	// Do some magic to restore third party wrappers from other extensions
 	wrapFunction: function(obj, meth, callBefore, prefix) {
@@ -1026,6 +1056,13 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 			title: data[1] || "",
 			isWeb: data.length > 1
 		};
+	},
+	get lastCommand() {
+		var last = this.lastURI;
+		if(last.isWeb)
+			return "viewWebPanelsSidebar";
+		var mi = last.uri && this.popup.getElementsByAttribute("sidebarurl", last.uri)[0];
+		return mi ? mi.getAttribute("observes") : undefined;
 	},
 	smartToggleSidebar: function(e) {
 		if(e && (e.button == 1 || e.button == 0 && e.ctrlKey)) // middle-click || ctrl+click
