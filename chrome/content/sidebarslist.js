@@ -324,7 +324,9 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		this.unwrapFunction(window, "asyncOpenWebPanel");
 	},
 	get clearSidebar() {
-		return this.sbCollapsable && this.sbBox.hidden;
+		return this.sbCollapsable
+			&& this.pref("collapseSidebar.clearBeforeSwitch")
+			&& this.sbBox.hidden;
 	},
 	clearBrowser: function(br) {
 		if(br.contentDocument) {
