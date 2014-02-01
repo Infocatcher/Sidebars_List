@@ -16,6 +16,9 @@
 `x` Correctly detect full screen mode in Firefox 3.6 and older.<br>
 `x` Correctly hide sidebar splitter, if active full screen web application (<em>extensions.sidebarslist.splitterWidthFullScreenDOM</em> preference) (<a href="https://github.com/Infocatcher/Sidebars_List/issues/4">#4</a>).<br>
 `+` Added separate preference for splitter width in full screen mode (F11) (<a href="https://github.com/Infocatcher/Sidebars_List/issues/5">#5</a>).<br>
+`x` Fix invalid `sidebarcommand` attribute to correctly close sidebar, if something went wrong (<a href="https://github.com/Infocatcher/Sidebars_List/issues/6">#6</a>).<br>
+`*` Optimized: update splitter width and visibility only if needed.<br>
+`*` Hide previous contents in collapsed sidebar before opening of another sidebar (<em>extensions.sidebarslist.collapseSidebar.clearBeforeSwitch</em> preference).<br>
 
 ##### 0.1.1 (2013-01-03)
 `-` Removed debug logs.<br>
