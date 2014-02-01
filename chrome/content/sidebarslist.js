@@ -1492,14 +1492,22 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		document.popupNode = spl;
 		popup.openPopup(spl, "end_before", false);
 		// Select first menuitem
-		// Unfortunately ordinal popup doesn't have nsIMenuBoxObject interface with "activeChild" field
-		var evt = document.createEvent("KeyboardEvent");
-		evt.initKeyEvent(
-			"keypress", true /*bubbles*/, true /*cancelable*/, window,
-			false /*ctrlKey*/, false /*altKey*/, false /*shiftKey*/, false /*metaKey*/,
-			evt.DOM_VK_DOWN /*keyCode*/, 0 /*charCode*/
-		);
-		popup.dispatchEvent(evt);
+		// Unfortunately ordinal popup doesn't have nsIMenuBoxObject interface with activeChild field
+		setTimeout(function() {
+			var keyCode = KeyboardEvent.DOM_VK_DOWN;
+			key("keydown",  keyCode);
+			key("keypress", keyCode);
+			key("keyup",    keyCode);
+		}, 0);
+		function key(type, code) {
+			var evt = document.createEvent("KeyboardEvent");
+			evt.initKeyEvent(
+				type, true /*bubbles*/, true /*cancelable*/, window,
+				false /*ctrlKey*/, false /*altKey*/, false /*shiftKey*/, false /*metaKey*/,
+				code /*keyCode*/, 0 /*charCode*/
+			);
+			popup.dispatchEvent(evt);
+		}
 	},
 
 	get stringBundle() {
