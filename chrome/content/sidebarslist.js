@@ -1494,11 +1494,16 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		// Select first menuitem
 		// Unfortunately ordinal popup doesn't have nsIMenuBoxObject interface with activeChild field
 		setTimeout(function() {
+			keyDown();
+			if(popup.firstChild.disabled)
+				keyDown();
+		}, 0);
+		function keyDown() {
 			var keyCode = KeyboardEvent.DOM_VK_DOWN;
 			key("keydown",  keyCode);
 			key("keypress", keyCode);
 			key("keyup",    keyCode);
-		}, 0);
+		}
 		function key(type, code) {
 			var evt = document.createEvent("KeyboardEvent");
 			evt.initKeyEvent(
