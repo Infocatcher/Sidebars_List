@@ -329,10 +329,17 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 			&& this.sbBox.hidden;
 	},
 	clearBrowser: function(br) {
-		if(br.contentDocument) {
-			var root = br.contentDocument.documentElement;
-			if(root)
+		var doc = br.contentDocument;
+		if(doc) {
+			var root = doc.documentElement;
+			if(root) {
 				root.style.display = "none";
+				// Fallback: we should handle unloading document, but something may went wrong
+				doc.defaultView.setTimeout(function(_this) {
+					root.style.display = "";
+					_this._log("clearBrowser(): show contents for " + doc.documentURI + " (fallback)");
+				}, 2000, this);
+			}
 		}
 	},
 	// Do some magic to restore third party wrappers from other extensions
