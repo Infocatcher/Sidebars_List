@@ -1490,10 +1490,7 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		var spl = this.sbSplitter;
 		this.ensurePopupPosition();
 		document.popupNode = spl;
-		if("openPopup" in popup) // Firefox 3.0+
-			popup.openPopup(spl, "end_before", false);
-		else
-			popup.showPopup(spl, -1, -1, "popup", "topright", "topleft");
+		popup.openPopup(spl, "end_before", false);
 		// Select first menuitem
 		// Unfortunately ordinal popup doesn't have nsIMenuBoxObject interface with "activeChild" field
 		var evt = document.createEvent("KeyboardEvent");
