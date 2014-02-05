@@ -27,13 +27,14 @@ function startup(params, reason) {
 			Services.prompt.alert(
 				null,
 				"Sidebars List :: Error",
-				"Sidebars List doesn't work in Firefox 4.0 - 7.0 and will be uninstalled.\n"
+				"Sidebars List doesn't work in Firefox 4.0 - 7.0 and will be disabled.\n"
 					+ "See https://developer.mozilla.org/en-US/docs/XPCOM_Interface_Reference/"
 					+ "nsIComponentManager#addBootstrappedManifestLocation%28%29 for details."
 			);
 			Components.utils.import("resource://gre/modules/AddonManager.jsm");
 			AddonManager.getAddonByID(params.id, function(addon) {
-				addon.uninstall();
+				//addon.uninstall();
+				addon.userDisabled = true;
 			});
 			return;
 		}
