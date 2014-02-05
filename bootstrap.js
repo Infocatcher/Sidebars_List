@@ -125,10 +125,3 @@ var windowsObserver = {
 		return window.document.documentElement.getAttribute("windowtype") == "navigator:browser";
 	}
 };
-
-function _log(s) {
-	Services.console.logStringMessage("[Sidebars List] " + s);
-}
-function _dump(s) {
-	dump("[Sidebars List] " + s + "\n");
-}
