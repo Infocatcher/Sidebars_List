@@ -692,7 +692,8 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 			case "collapseSidebar":              this.setCollapsableSidebar(pVal); break;
 			case "reloadButtonStyle":            this.updateControlsStyle();       break;
 			case "removeWidthLimits":            this.removeSidebarWidthLimits();  break;
-			case "fixSidebarZoom":               this.fixSidebarZoom();
+			case "fixSidebarZoom":               this.fixSidebarZoom();            break;
+			case "openTabInSidebarClosesTab":    this.setMoveLabel();
 		}
 	},
 
@@ -790,10 +791,9 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		var c2sb = this.c2sb = document.createElement("menuitem");
 		c2sb.id = "sidebarsList-contentToSidebar";
 		c2sb.className = "menuitem-iconic";
-		c2sb.setAttribute("label", this.getLocalized("contentToSidebar"));
-		c2sb.setAttribute("accesskey", this.getLocalized("contentToSidebarAccessKey"));
 		c2sb.setAttribute("oncommand", "sidebarsList.contentToSidebar();");
 		c2sb.setAttribute("key", "sidebarsList-key-contentToSidebar");
+		this.setMoveLabel();
 		df.appendChild(c2sb);
 
 		var sb2c = this.sb2c = document.createElement("menuitem");
@@ -809,6 +809,14 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		popup.appendChild(df);
 
 		this.setDisableChecked();
+	},
+	setMoveLabel: function() {
+		var mi = this.c2sb;
+		if(!mi) // Preference changed, but menu item not yet created
+			return;
+		var move = this.pref("openTabInSidebarClosesTab") ? "Move" : "";
+		mi.setAttribute("label", this.getLocalized("contentToSidebar" + move));
+		mi.setAttribute("accesskey", this.getLocalized("contentToSidebar" + move + "AccessKey"));
 	},
 	destroyPopup: function(force) {
 		var popup = this.popup;
