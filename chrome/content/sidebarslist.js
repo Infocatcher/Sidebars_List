@@ -791,7 +791,8 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		var c2sb = this.c2sb = document.createElement("menuitem");
 		c2sb.id = "sidebarsList-contentToSidebar";
 		c2sb.className = "menuitem-iconic";
-		c2sb.setAttribute("oncommand", "sidebarsList.contentToSidebar();");
+		c2sb.setAttribute("oncommand", "sidebarsList.contentToSidebar(event);");
+		c2sb.setAttribute("onclick", "sidebarsList.contentToSidebar(event);");
 		c2sb.setAttribute("key", "sidebarsList-key-contentToSidebar");
 		this.setMoveLabel();
 		df.appendChild(c2sb);
@@ -1429,7 +1430,10 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		return sbUri;
 	},
 
-	contentToSidebar: function() {
+	contentToSidebar: function(e) {
+		if(this.handleClickEvent(e))
+			return;
+		var _click = e && e.type == "click";
 		var url = content.location.href;
 		var mis = this.popup.getElementsByAttribute("sidebarurl", url);
 		if(mis.length) {
@@ -1441,7 +1445,10 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 			this.setTargetSidebar("viewWebPanelsSidebar");
 			openWebPanel(content.document.title || url, url);
 		}
-		if(this.pref("openTabInSidebarClosesTab")) {
+		var move = this.pref("openTabInSidebarClosesTab");
+		if(e && (_click || e.ctrlKey || e.shiftKey || e.altKey || e.metaKey))
+			move = !move;
+		if(move) {
 			var tab = gBrowser.selectedTab;
 			var removeTab = function(tab) {
 				var tabs = gBrowser.visibleTabs || gBrowser.tabs;
@@ -1484,6 +1491,8 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 				removeTab(tab);
 			}
 		}
+		if(_click && this.pref("closeSidebarsMenu"))
+			closeMenus(this.popup);
 	},
 	setTargetSidebar: function(cmd) {
 		if(!cmd || !this.multiSb)
@@ -1495,39 +1504,46 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		this.setPref(pref, this.currentSbNum);
 	},
 	sidebarToContent: function(e) {
-		if(e && e.target.getAttribute("disabled") == "true")
+		if(this.handleClickEvent(e))
 			return;
 		var _click = e && e.type == "click";
 		var _cmd   = e && e.type == "command";
-		if(_click) {
-			var btn = e.button;
-			if(btn == 0)
-				return; // ignore "click" event
-			if(btn == 2)
-				e.preventDefault(); // should stop "command" event
-		}
 		var sbUri = this.getSbURI();
 		if(!sbUri)
 			return;
 		var tbr = this.browser;
-		if(_cmd && e.ctrlKey || _click) {
+		if(_cmd && (e.ctrlKey || e.metaKey || e.altKey) || _click) {
 			var inBg = this.getPref("browser.tabs.loadInBackground");
 			var tab = tbr.addTab(sbUri);
-			if(_click && btn == 2 ? !inBg : inBg)
+			if(_click && e.button == 2 ? !inBg : inBg)
 				tbr.selectedTab = tab;
 		}
-		else if(_cmd && e.shiftKey)
+		else if(_cmd && e.shiftKey) {
 			window.openDialog(
 				getBrowserURL(),
 				"_blank",
 				"chrome,all,dialog=no",
 				sbUri, null, null, null, false
 			);
+		}
 		else {
 			tbr.loadURI(sbUri);
 		}
-		if(this.pref("closeSidebarsMenu"))
+		if(_click && this.pref("closeSidebarsMenu"))
 			closeMenus(this.popup);
+	},
+	handleClickEvent: function(e) {
+		// Use "command" event for left-click (and for keyboard) and "click" otherwise
+		if(e && e.type == "click") {
+			if(e.target.getAttribute("disabled") == "true")
+				return true;
+			var btn = e.button;
+			if(btn == 0)
+				return true; // ignore "click" event (and use "command")
+			if(btn == 2)
+				e.preventDefault(); // should stop "command" event
+		}
+		return false;
 	},
 	selectSidebar: function() {
 		var popup = this.popup;
