@@ -1446,7 +1446,15 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 			openWebPanel(content.document.title || url, url);
 		}
 		var move = this.pref("openTabInSidebarClosesTab");
-		if(e && (_click || e.ctrlKey || e.shiftKey || e.altKey || e.metaKey))
+		if(
+			e && (
+				_click && (
+					e.button == 1
+					|| e.button == 2 && this.pref("openTabInSidebarClosesTab.rightClickToInvert")
+				)
+				|| e.ctrlKey || e.shiftKey || e.altKey || e.metaKey
+			)
+		)
 			move = !move;
 		if(move) {
 			var tab = gBrowser.selectedTab;
