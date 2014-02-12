@@ -1441,7 +1441,10 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 					gBrowser.selectedTab = gBrowser.addTab("about:blank", { skipAnimation: true });
 				gBrowser.removeTab(tab);
 			};
-			if("_swapBrowserDocShells" in gBrowser) {
+			if(
+				"_swapBrowserDocShells" in gBrowser
+				&& this.pref("openTabInSidebarClosesTab.useMove")
+			) {
 				if("_blurTab" in gBrowser) {
 					gBrowser._blurTab(tab);
 					tab.collapsed = true;
