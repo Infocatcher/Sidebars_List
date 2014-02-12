@@ -12,13 +12,14 @@
 `*` Don't use <a href="https://developer.mozilla.org/en-US/docs/Extensions/Updating_extensions_for_Firefox_4#XPI_unpacking">internal *.jar archive</a> anymore (this should also improve performance on Firefox 4+).<br>
 `+` Added option to move tab to sidebar (<a href="https://github.com/Infocatcher/Sidebars_List/issues/2">#2</a>).<br>
 `x` Correctly apply small splitter width on Linux (<a href="https://github.com/Infocatcher/Sidebars_List/issues/3">#3</a>).<br>
-`*` Wrap bult-in function after small delay for better compatibility with other extensions (this also slightly improves startup performance).<br>
+`*` Wrap bult-in functions after small delay for better compatibility with other extensions (this also slightly improves startup performance).<br>
 `x` Correctly detect full screen mode in Firefox 3.6 and older.<br>
 `x` Correctly hide sidebar splitter, if active full screen web application (<em>extensions.sidebarslist.splitterWidthFullScreenDOM</em> preference) (<a href="https://github.com/Infocatcher/Sidebars_List/issues/4">#4</a>).<br>
 `+` Added separate preference for splitter width in full screen mode (F11) (<a href="https://github.com/Infocatcher/Sidebars_List/issues/5">#5</a>).<br>
 `x` Fix invalid `sidebarcommand` attribute to correctly close sidebar, if something went wrong (<a href="https://github.com/Infocatcher/Sidebars_List/issues/6">#6</a>).<br>
 `*` Optimized: update splitter width and visibility only if needed.<br>
 `*` Hide previous contents in collapsed sidebar before opening of another sidebar (<em>extensions.sidebarslist.collapseSidebar.clearBeforeSwitch</em> preference).<br>
+`x` Correctly select first menu item, if sidebars menu was opened from keyboard (Ctrl+Shift+F4 by default) in Firefox 25+.<br>
 
 ##### 0.1.1 (2013-01-03)
 `-` Removed debug logs.<br>
