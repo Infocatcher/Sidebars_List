@@ -9,7 +9,7 @@
 `*` Теперь используется фиксированное ограничение для ширины переключателя боковых панелей для улучшения производительности при запуске.<br>
 `x` Добавлено восстановление ограничений ширины боковой панели при отключении/удалении расширения.<br>
 `+` Добавлена возможность изменения масштаба веб-страницы в боковой панели (известное ограничение: не работает для Ctrl+вращение колесика мышки) (<a href="https://github.com/Infocatcher/Sidebars_List/issues/1">#1</a>).<br>
-`*` Больше не используется упаковка во <a href="https://developer.mozilla.org/en-US/docs/Extensions/Updating_extensions_for_Firefox_4#XPI_unpacking">внутренний *.jar архив</a> (это также должно улучшить производительность в Firefox 4+).<br>
+`*` Больше не используется упаковка во <a href="https://developer.mozilla.org/en-US/docs/Extensions/Updating_extensions_for_Firefox_4#XPI_unpacking">внутренний \*.jar архив</a> (это также должно улучшить производительность в Firefox 4+).<br>
 `+` Добавлена настройка для перемещения вкладки в боковую панель (скрытые настройки: <em>extensions.sidebarslist.openTabInSidebarClosesTab.useMove</em> для сохранения состояния страницы и <em>extensions.sidebarslist.openTabInSidebarClosesTab.rightClickToInvert</em> для инвертирования открытия/перемещения по клику правой кнопкой мыши) (<a href="https://github.com/Infocatcher/Sidebars_List/issues/2">#2</a>).<br>
 `x` Исправлено применение маленькой ширины переключателя боковых панелей в Linux (<a href="https://github.com/Infocatcher/Sidebars_List/issues/3">#3</a>).<br>
 `*` Обертки для встроенных функций добавляются после небольшой задержки для улучшения совместимости с другими расширениями (это также должно немного улучшить производительность при запуске).<br>
