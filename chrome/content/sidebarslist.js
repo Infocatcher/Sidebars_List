@@ -1435,10 +1435,43 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		}
 		if(this.pref("openTabInSidebarClosesTab")) {
 			var tab = gBrowser.selectedTab;
-			var tabs = gBrowser.visibleTabs || gBrowser.tabs;
-			if(tabs.length <= 1)
-				gBrowser.selectedTab = gBrowser.addTab("about:blank", { skipAnimation: true });
-			gBrowser.removeTab(tab);
+			var removeTab = function(tab) {
+				var tabs = gBrowser.visibleTabs || gBrowser.tabs;
+				if(tabs.length <= 1)
+					gBrowser.selectedTab = gBrowser.addTab("about:blank", { skipAnimation: true });
+				gBrowser.removeTab(tab);
+			};
+			if("_swapBrowserDocShells" in gBrowser) {
+				if("_blurTab" in gBrowser) {
+					gBrowser._blurTab(tab);
+					tab.collapsed = true;
+				}
+				var sb = this.currentSb;
+				(function swapBrowsers(loadEvent) {
+					var wpBrowser = sb.contentDocument
+						&& sb.contentDocument.getElementById("web-panels-browser");
+					if(loadEvent)
+						sb.removeEventListener("load", swapBrowsers, true);
+					else if(!wpBrowser) {
+						sb.addEventListener("load", swapBrowsers, true);
+						return;
+					}
+					// src of #web-panels-browser not yet changed, wait
+					setTimeout(function() {
+						try {
+							wpBrowser.stop();
+							gBrowser._swapBrowserDocShells(tab, wpBrowser);
+						}
+						catch(e) {
+							Components.utils.reportError(e);
+						}
+						removeTab(tab);
+					}, 0);
+				})();
+			}
+			else {
+				removeTab(tab);
+			}
 		}
 	},
 	setTargetSidebar: function(cmd) {
