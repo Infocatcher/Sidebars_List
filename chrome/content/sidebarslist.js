@@ -270,16 +270,22 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 			else {
 				var cmd = this.sbBox.getAttribute("sidebarcommand");
 				if(!cmd || !document.getElementById(cmd)) {
-					this._log("toggleSidebar(): sidebar broadcaster not found, sidebarcommand = \"" + cmd + "\"");
+					var url = this.sb.currentURI.spec;
+					this._log(
+						"toggleSidebar(): sidebar broadcaster not found, "
+						+ "sidebarcommand: \"" + cmd + "\", URL: " + url
+					);
 					if(!this.sbBox.hidden) {
-						var url = this.sb.currentURI.spec;
-						var mi = this.popup.getElementsByAttribute("sidebarurl", url)[0];
-						if(mi) {
-							var realCmd = mi.getAttribute("observes");
-							if(document.getElementById(realCmd)) {
-								this.sbBox.setAttribute("sidebarcommand", realCmd);
-								this._log("toggleSidebar(): fix sidebar broadcaster: " + realCmd);
-							}
+						var realCmd;
+						if(url == "chrome://browser/content/web-panels.xul")
+							realCmd = "viewWebPanelsSidebar";
+						else {
+							var mi = this.popup.getElementsByAttribute("sidebarurl", url)[0];
+							realCmd = mi && mi.getAttribute("observes");
+						}
+						if(realCmd && document.getElementById(realCmd)) {
+							this.sbBox.setAttribute("sidebarcommand", realCmd);
+							this._log("toggleSidebar(): fix sidebar broadcaster: " + realCmd);
 						}
 					}
 				}
