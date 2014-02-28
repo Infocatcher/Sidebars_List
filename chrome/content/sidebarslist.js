@@ -622,7 +622,7 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		return window.fullScreen ? window.STATE_FULLSCREEN || 4 : window.windowState;
 	},
 	maxSplitterWidth: 128,
-	setSplitterWidth: function() {
+	setSplitterWidth: function(byPrefChange) {
 		var state = this._lastWindowState = this.windowState;
 		if(state == window.STATE_MINIMIZED)
 			return;
@@ -683,6 +683,16 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 			stl.setProperty("margin-left",  marginLeft  + "px", "important");
 			stl.setProperty("margin-right", marginRight + "px", "important");
 		}
+
+		if(byPrefChange && "TreeStyleTabService" in window) try {
+			// Workaround for https://github.com/piroor/treestyletab/issues/546#issuecomment-32224492
+			var {TreeStyleTabConstants} = Components.utils.import("resource://treestyletab-modules/constants.js", {});
+			gBrowser.treeStyleTab.updateFloatingTabbar(TreeStyleTabConstants.kTABBAR_UPDATE_BY_APPEARANCE_CHANGE);
+			this._log("setSplitterWidth(): force update Tree Style Tab");
+		}
+		catch(e) {
+			Components.utils.reportError(e);
+		}
 	},
 	sizeModeChanged: function(e) {
 		if(this.windowState != this._lastWindowState)
@@ -694,7 +704,7 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 			case "splitterWidth":
 			case "splitterWidthMaximizedWindow":
 			case "splitterWidthFullScreen":
-			case "splitterWidthFullScreenDOM":   this.setSplitterWidth();          break;
+			case "splitterWidthFullScreenDOM":   this.setSplitterWidth(true);      break;
 			case "collapseSidebar":              this.setCollapsableSidebar(pVal); break;
 			case "reloadButtonStyle":            this.updateControlsStyle();       break;
 			case "removeWidthLimits":            this.removeSidebarWidthLimits();  break;
