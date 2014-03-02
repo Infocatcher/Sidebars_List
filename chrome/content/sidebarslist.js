@@ -51,6 +51,16 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		if(!force)
 			this.saveCurrentURI();
 
+		// Workaround to correctly save web panel title
+		var ttl = this.getOrigTitle();
+		if(ttl && ttl.id) {
+			if(force)
+				ttl.removeAttribute("sidebarslist_value");
+			else
+				ttl.setAttribute("sidebarslist_value", ttl.value);
+			document.persist(ttl.id, "sidebarslist_value");
+		}
+
 		if(this.hasMutationObserver)
 			this.removeAttrMutationObservers(this.origTitles);
 		else
@@ -770,14 +780,21 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		this.property(ttl, "className", (ttl.className + " " + "sidebarsList-originalTitle").replace(/^\s+/, ""));
 		this.property(ttl, "__sidebarsList_tbb", tbb);
 		var val = ttl.value;
-		tbb.setAttribute("label", ttl.value);
+		if(!val) {
+			val = ttl.getAttribute("sidebarslist_value");
+			this._log("Will use saved sidebar title:\n" + val);
+		}
+		tbb.setAttribute("label", val);
 
 		document.persist(ttl.id, "value"); // Firefox bug: title of web panel isn't restored
 		// Firefox bug: restored title of web panel may disappears...
 		// Cen be reproduced in Firefox 10.0.11
-		val && setTimeout(function() {
+		val && setTimeout(function(_this) {
+			if(ttl.value)
+				return;
+			_this._log("Sidebar title disappears, restore:\n" + val);
 			ttl.value = val;
-		}, 0);
+		}, 0, this);
 
 		tbb.__sidebarsList_multiNum = multiNum;
 		if(this.hasMutationObserver)
