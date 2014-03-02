@@ -1523,6 +1523,7 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 						}
 						catch(e) {
 							Components.utils.reportError(e);
+							wpBrowser.loadURI(url); // Fallback
 						}
 						removeTab(tab);
 					}, 0);
