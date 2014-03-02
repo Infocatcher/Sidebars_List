@@ -17,7 +17,7 @@ pref("extensions.sidebarslist.removeWidthLimits", true);
 pref("extensions.sidebarslist.fixSidebarZoom", true);
 pref("extensions.sidebarslist.closeSidebarsMenu", true);
 pref("extensions.sidebarslist.openTabInSidebarClosesTab", false);
-pref("extensions.sidebarslist.openTabInSidebarClosesTab.useMove", false);
+pref("extensions.sidebarslist.openTabInSidebarClosesTab.useMove", true); // Preserve page state
 pref("extensions.sidebarslist.openTabInSidebarClosesTab.rightClickToInvert", false);
 pref("extensions.sidebarslist.reloadButtonStyle", "auto");
 // See styles for [sidebarslist_style="..."] in chrome://sidebarslist/content/sidebarslist.css
