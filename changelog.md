@@ -12,7 +12,7 @@
 `*` Don't use <a href="https://developer.mozilla.org/en-US/docs/Extensions/Updating_extensions_for_Firefox_4#XPI_unpacking">internal \*.jar archive</a> anymore (this should also improve performance on Firefox 4+).<br>
 `+` Added option to move tab to sidebar (hidden preferences: <em>extensions.sidebarslist.openTabInSidebarClosesTab.useMove</em> to preserve page state and <em>extensions.sidebarslist.openTabInSidebarClosesTab.rightClickToInvert</em> to invert move/open behavior using right-click) (<a href="https://github.com/Infocatcher/Sidebars_List/issues/2">#2</a>).<br>
 `x` Correctly apply small splitter width on Linux (<a href="https://github.com/Infocatcher/Sidebars_List/issues/3">#3</a>).<br>
-`*` Wrap bult-in functions after small delay for better compatibility with other extensions (this also slightly improves startup performance).<br>
+`*` Wrap built-in functions after small delay for better compatibility with other extensions (this also slightly improves startup performance).<br>
 `x` Correctly detect full screen mode in Firefox 3.6 and older.<br>
 `x` Correctly hide sidebar splitter, if active full screen web application (<em>extensions.sidebarslist.splitterWidthFullScreenDOM</em> preference) (<a href="https://github.com/Infocatcher/Sidebars_List/issues/4">#4</a>).<br>
 `+` Added separate preference for splitter width in full screen mode (F11) (<a href="https://github.com/Infocatcher/Sidebars_List/issues/5">#5</a>).<br>
