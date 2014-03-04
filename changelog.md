@@ -6,6 +6,7 @@
 `*` - improved<br>
 
 ##### master/HEAD
+##### 0.2.0 (2014-03-04)
 `*` Now used hardcoded splitter width limit to improve startup performance.<br>
 `x` Correctly restore sidebar width limits on extension disabling/uninstalling.<br>
 `+` Added ability to zoom web page in sidebar (known limitation: doesn't work for Ctrl+mouse wheel) (<a href="https://github.com/Infocatcher/Sidebars_List/issues/1">#1</a>).<br>
