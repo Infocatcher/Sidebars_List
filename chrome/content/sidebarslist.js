@@ -1142,8 +1142,11 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 	toggleSidebar: function(commandId) {
 		var special = commandId && commandId.charAt(0);
 		if(special == "#") {
-			var node = document.getElementById(commandId.substr(1));
-			node && node.doCommand();
+			commandId.substr(1).split(/\s*,\s*#/).some(function(id) {
+				var node = document.getElementById(id);
+				node && node.doCommand();
+				return node;
+			});
 			return;
 		}
 		else if(special == ">") {

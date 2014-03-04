@@ -2,6 +2,7 @@ pref("extensions.sidebarslist.middleClickSidebar", "viewHistorySidebar");
 // You can use:
 //   viewBookmarksSidebar - value of the "observes" attribute (use DOM Inspector to get it)
 //   #idOfNode            - will be called document.getElementById("idOfNode").doCommand()
+//   #id1, #id2, ...      - will be called doCommand() for first existing node
 //   >anyJavaScriptStatement();
 pref("extensions.sidebarslist.disableOpened", true);
 pref("extensions.sidebarslist.disableOpened.notStandard", false);
