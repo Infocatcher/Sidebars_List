@@ -20,6 +20,8 @@
 `*` Optimized: update splitter width and visibility only if needed.<br>
 `*` Hide previous contents in collapsed sidebar before opening of another sidebar (<em>extensions.sidebarslist.collapseSidebar.clearBeforeSwitch</em> preference).<br>
 `x` Correctly select first menu item, if sidebars menu was opened from keyboard (Ctrl+Shift+F4 by default) in Firefox 25+.<br>
+`+` Added: middle-click on sidebar resizer to close sidebar.<br>
+`x` Fixed compatibility with <a href="https://addons.mozilla.org/addon/sidebar-auto-showhide/">Sidebar Auto Show/Hide</a> extension, if checked “collapse sidebar” option.<br>
 
 ##### 0.1.1 (2013-01-03)
 `-` Removed debug logs.<br>
