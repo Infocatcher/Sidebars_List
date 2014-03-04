@@ -492,6 +492,21 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 				configurable: true,
 				enumerable: true
 			});
+			// Also override getAttribute("hidden")/setAttribute("hidden", ...) for other extensions
+			// like Sidebar Auto Show/Hide https://addons.mozilla.org/addon/sidebar-auto-showhide/
+			// Note: native .hidden getter/setter doesn't use our wrapped functions
+			this.wrapFunction(sbBox, "getAttribute", function(attrName) {
+				if(attrName == "hidden")
+					return { value: sbBox.collapsed };
+				return false;
+			}, "sidebarBox.");
+			this.wrapFunction(sbBox, "setAttribute", function(attrName, attrVal) {
+				if(attrName == "hidden") {
+					sbBox.collapsed = String(attrVal) == "true";
+					return true;
+				}
+				return false;
+			}, "sidebarBox.");
 			this.wrapFunction(sb, "setAttribute", function(attrName, attrVal) {
 				return attrName == "src" && (
 					attrVal == "about:blank"
@@ -524,6 +539,8 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		else {
 			var hidden = sbBox.hidden;
 			this.restoreProperty(sbBox, "hidden", this._origSBHidden);
+			this.unwrapFunction(sbBox, "getAttribute", "sidebarBox.");
+			this.unwrapFunction(sbBox, "setAttribute", "sidebarBox.");
 			this.unwrapFunction(sb, "setAttribute", "sidebar.");
 			if("_origSBDocShell" in this) {
 				this.restoreProperty(sb, "docShell", this._origSBDocShell);
