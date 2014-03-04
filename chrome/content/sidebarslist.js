@@ -1153,6 +1153,8 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		toggleSidebar(commandId);
 	},
 	closeSidebar: function(force) {
+		if(this.sbBox.hidden)
+			return;
 		if(force && typeof force == "object") {
 			var e = force;
 			force = e.ctrlKey || e.shiftKey || e.altKey || e.metaKey
