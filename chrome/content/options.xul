@@ -1,6 +1,13 @@
 <?xml version="1.0"?>
 <!DOCTYPE vbox SYSTEM "chrome://sidebarslist/locale/sbl.dtd">
 <vbox xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+	<script type="application/javascript">
+	if(top.location.href == "chrome://sidebarslist/content/options.xul") {
+		var opener = top.opener || top;
+		top.close();
+		opener.alert("Doesn't work in Firefox 3.6 and older, see extensions.sidebarslist.* on about:config page");
+	}
+	</script>
 	<setting pref="extensions.sidebarslist.disableOpened" type="bool" title="&sbl.disableOpened;"/>
 	<setting pref="extensions.sidebarslist.collapseSidebar" type="bool" title="&sbl.collapseSidebar;"/>
 	<setting pref="extensions.sidebarslist.openTabInSidebarClosesTab" type="bool" title="&sbl.openTabInSidebarClosesTab;"/>
