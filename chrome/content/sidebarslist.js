@@ -1008,6 +1008,8 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		if(!n || n == 2) {
 			var spl = this.$("sidebar" + (n ? "-" + n : "") + "-splitter");
 			this.attribute(spl, "ondblclick", "if(event.button == 0) sidebarsList.restoreSidebarWidth(" + (n || "") + ");");
+			if(!n)
+				this.attribute(spl, "onclick", "if(event.button == 1) sidebarsList.closeSidebar();");
 		}
 	},
 
