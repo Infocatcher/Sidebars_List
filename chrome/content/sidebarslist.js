@@ -38,6 +38,8 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		if(this.isAustralis) {
 			window.addEventListener("ViewShowing", this, false);
 			window.addEventListener("ViewHiding", this, false);
+			if(this.sidebarsBnt)
+				this.sidebarsBnt.addEventListener("mouseover", this, false);
 		}
 
 		setTimeout(function(_this) {
@@ -54,6 +56,8 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		if(this.isAustralis) {
 			window.removeEventListener("ViewShowing", this, false);
 			window.removeEventListener("ViewHiding", this, false);
+			if(this.sidebarsBnt)
+				this.sidebarsBnt.removeEventListener("mouseover", this, false);
 		}
 
 		if(!force)
@@ -124,6 +128,7 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 			case "mousedown":        this.ensurePopupPosition(e); break;
 			case "ViewShowing":      this.viewShowingHandler(e);  break;
 			case "ViewHiding":       this.viewHidingHandler(e);   break;
+			case "mouseover":        this.mouseOverHandler(e);    break;
 			case "DOMMouseScroll": // Legacy
 			case "wheel":            this.scrollList(e);          break;
 			case "resize": // Legacy
@@ -785,6 +790,13 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 	get browser() {
 		return window.gBrowser || getBrowser();
 	},
+	get sidebarsBnt() {
+		var btn = document.getElementById("sidebar-button");
+		if(!btn)
+			return null;
+		delete this.sidebarsBnt;
+		return this.sidebarsBnt = btn;
+	},
 
 	addList: function(multiNum) {
 		var multiId = multiNum > 1 ? "-" + multiNum : "";
@@ -874,6 +886,10 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		popup.appendChild(df);
 
 		this.setDisableChecked();
+	},
+	mouseOverHandler: function(e) {
+		this.sidebarsBnt.removeEventListener("mouseover", this, false);
+		this.initPopup();
 	},
 	setMoveLabel: function() {
 		var mi = this.c2sb;
