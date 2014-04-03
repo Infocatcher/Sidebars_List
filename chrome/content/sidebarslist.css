@@ -34,18 +34,20 @@
 	-moz-image-region: rect(0 48px 16px 32px);
 }
 
-#sidebarsList-sidebarToContent {
+/* We don't use #id to work in cloned menu (Sidebars button) in Firefox 31+ */
+.sidebarsList-sidebarToContent {
 	list-style-image: url("icons16.png");
 	-moz-image-region: rect(16px 32px 32px 16px);
 }
-#sidebarsList-contentToSidebar {
+.sidebarsList-contentToSidebar {
 	list-style-image: url("icons16.png");
 	-moz-image-region: rect(16px 16px 32px 0);
 }
-#sidebarsList-sidebarToContent[disabled="true"] .menu-iconic-icon,
-#sidebarsList-contentToSidebar[disabled="true"] .menu-iconic-icon {
+.sidebarsList-sidebarToContent[disabled="true"] .menu-iconic-icon,
+.sidebarsList-contentToSidebar[disabled="true"] .menu-iconic-icon {
 	opacity: 0.32;
 }
+
 #sidebarsList-splitter {
 	cursor: pointer;
 	min-width: 0 !important;

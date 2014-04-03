@@ -840,7 +840,7 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 
 		var c2sb = this.c2sb = document.createElement("menuitem");
 		c2sb.id = "sidebarsList-contentToSidebar";
-		c2sb.className = "menuitem-iconic";
+		c2sb.className = "menuitem-iconic sidebarsList-contentToSidebar";
 		c2sb.setAttribute("oncommand", "sidebarsList.contentToSidebar(event);");
 		c2sb.setAttribute("onclick", "sidebarsList.contentToSidebar(event);");
 		c2sb.setAttribute("key", "sidebarsList-key-contentToSidebar");
@@ -849,7 +849,7 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 
 		var sb2c = this.sb2c = document.createElement("menuitem");
 		sb2c.id = "sidebarsList-sidebarToContent";
-		sb2c.className = "menuitem-iconic";
+		sb2c.className = "menuitem-iconic sidebarsList-sidebarToContent";
 		sb2c.setAttribute("label", this.getLocalized("sidebarToContent"));
 		sb2c.setAttribute("accesskey", this.getLocalized("sidebarToContentAccessKey"));
 		sb2c.setAttribute("oncommand", "sidebarsList.sidebarToContent(event);");
