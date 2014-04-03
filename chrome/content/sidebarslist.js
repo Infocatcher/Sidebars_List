@@ -298,7 +298,7 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 			}
 			else {
 				var cmd = this.sbBox.getAttribute("sidebarcommand");
-				if(!cmd || !document.getElementById(cmd)) {
+				if(!cmd || !this.$(cmd)) {
 					var url = this.sb.currentURI.spec;
 					this._log(
 						"toggleSidebar(): sidebar broadcaster not found, "
@@ -312,7 +312,7 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 							var mi = this.popup.getElementsByAttribute("sidebarurl", url)[0];
 							realCmd = mi && mi.getAttribute("observes");
 						}
-						if(realCmd && document.getElementById(realCmd)) {
+						if(realCmd && this.$(realCmd)) {
 							this.sbBox.setAttribute("sidebarcommand", realCmd);
 							this._log("toggleSidebar(): fix sidebar broadcaster: " + realCmd);
 						}
@@ -1197,10 +1197,10 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		var special = commandId && commandId.charAt(0);
 		if(special == "#") {
 			commandId.substr(1).split(/\s*,\s*#/).some(function(id) {
-				var node = document.getElementById(id);
+				var node = this.$(id);
 				node && node.doCommand();
 				return node;
-			});
+			}, this);
 			return;
 		}
 		else if(special == ">") {
