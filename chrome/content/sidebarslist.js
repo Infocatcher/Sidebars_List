@@ -35,12 +35,6 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		this.registerHotkeys();
 
 		this.popup.addEventListener("popupshowing", this, true);
-		if(this.isAustralis) {
-			window.addEventListener("ViewShowing", this, false);
-			window.addEventListener("ViewHiding", this, false);
-			if(this.sidebarsBnt)
-				this.sidebarsBnt.addEventListener("mouseover", this, false);
-		}
 
 		setTimeout(function(_this) {
 			_this.delayedInit();
@@ -50,6 +44,12 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		this.addSbWrappers();
 		if(!this._sidebarHeaderCreated && !this.sbBox.hidden)
 			this.tweakSidebar();
+		if(this.isAustralis) {
+			window.addEventListener("ViewShowing", this, false);
+			window.addEventListener("ViewHiding", this, false);
+			if(this.sidebarsBnt)
+				this.sidebarsBnt.addEventListener("mouseover", this, false);
+		}
 	},
 	destroy: function(force) {
 		window.removeEventListener("unload", this, false);
