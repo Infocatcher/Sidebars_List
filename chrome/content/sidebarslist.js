@@ -35,6 +35,10 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		this.registerHotkeys();
 
 		this.popup.addEventListener("popupshowing", this, true);
+		if(this.isAustralis) {
+			window.addEventListener("ViewShowing", this, false);
+			window.addEventListener("ViewHiding", this, false);
+		}
 
 		setTimeout(function(_this) {
 			_this.delayedInit();
@@ -47,6 +51,10 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 	},
 	destroy: function(force) {
 		window.removeEventListener("unload", this, false);
+		if(this.isAustralis) {
+			window.removeEventListener("ViewShowing", this, false);
+			window.removeEventListener("ViewHiding", this, false);
+		}
 
 		if(!force)
 			this.saveCurrentURI();
@@ -114,6 +122,8 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 			case "popuphidden":      this.popupHiddenHandler(e);  break;
 			case "contextmenu":
 			case "mousedown":        this.ensurePopupPosition(e); break;
+			case "ViewShowing":      this.viewShowingHandler(e);  break;
+			case "ViewHiding":       this.viewHidingHandler(e);   break;
 			case "DOMMouseScroll": // Legacy
 			case "wheel":            this.scrollList(e);          break;
 			case "resize": // Legacy
@@ -166,6 +176,10 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		return this.wheelEvent = "WheelEvent" in window
 			? "wheel"
 			: "DOMMouseScroll";
+	},
+	get isAustralis() {
+		delete this.isAustralis;
+		return this.isAustralis = "CustomizableUI" in window;
 	},
 
 	_sidebarHeaderCreated: false,
@@ -900,18 +914,16 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		this.rc(this.sb2c);
 	},
 	popupShowingHandler: function(e) {
-		var popup = e.currentTarget;
-		if(e.target != popup)
+		if(e && e.target != e.currentTarget)
 			return;
 		this._popupOpen = true; //~ todo: use popup.state (Firefox 3.0+) ?
 		this.initPopup();
 		this.initContext();
-		this.highlightFeatures(popup);
+		this.highlightFeatures(this.popup);
 	},
 	_restorePopupTimer: 0,
 	popupHiddenHandler: function(e) {
-		var popup = e.currentTarget;
-		if(e.target != popup)
+		if(e && e.target != e.currentTarget)
 			return;
 		this._popupOpen = false;
 		this.destroyContext();
@@ -989,6 +1001,14 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		var parent = this.popupParent;
 		if(parent && popup.parentNode != parent)
 			parent.appendChild(popup);
+	},
+	viewShowingHandler: function(e) {
+		if(e.target.id == "PanelUI-sidebar")
+			this.popupShowingHandler();
+	},
+	viewHidingHandler: function(e) {
+		if(e.target.id == "PanelUI-sidebar")
+			this.popupHiddenHandler();
 	},
 	createSplitter: function() {
 		var sbSplitter = this.sbSplitter = document.createElement("splitter");
@@ -1450,8 +1470,17 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 	_setContextCommands: function() {
 		var sbUri = this.getSbURI(true);
 		var cUri = content.location.href;
-		this.setItem(this.sb2c, sbUri, cUri);
-		this.setItem(this.c2sb, cUri, sbUri);
+		this.setItems(this.sb2c, sbUri, cUri);
+		this.setItems(this.c2sb, cUri, sbUri);
+	},
+	setItems: function(baseItem, newUri, curUri) {
+		Array.forEach(
+			document.getElementsByClassName(baseItem.id),
+			function(it) {
+				this.setItem(it, newUri, curUri);
+			},
+			this
+		);
 	},
 	setItem: function(it, newUri, curUri) {
 		var isBlank = this.isBlankPageURL(newUri);
