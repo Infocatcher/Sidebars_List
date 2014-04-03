@@ -791,7 +791,8 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		return window.gBrowser || getBrowser();
 	},
 	get sidebarsBnt() {
-		var btn = document.getElementById("sidebar-button");
+		// Note: button inside #PanelUI-button isn't available on window startup
+		var btn = this.$("sidebar-button") || this.$("PanelUI-button");
 		if(!btn)
 			return null;
 		delete this.sidebarsBnt;
