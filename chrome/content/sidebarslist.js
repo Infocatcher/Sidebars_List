@@ -1604,7 +1604,7 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 			}
 		}
 		if(_click && this.pref("closeSidebarsMenu"))
-			closeMenus(this.popup);
+			this.closeMenus(e ? e.target : this.popup);
 	},
 	setTargetSidebar: function(cmd) {
 		if(!cmd || !this.multiSb)
@@ -1642,7 +1642,7 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 			tbr.loadURI(sbUri);
 		}
 		if(_click && this.pref("closeSidebarsMenu"))
-			closeMenus(this.popup);
+			this.closeMenus(e ? e.target : this.popup);
 	},
 	handleClickEvent: function(e) {
 		// Use "command" event for left-click (and for keyboard) and "click" otherwise
@@ -1684,6 +1684,17 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 				code /*keyCode*/, 0 /*charCode*/
 			);
 			popup.dispatchEvent(evt);
+		}
+	},
+	closeMenus: function(node) {
+		// Based on function closeMenus() from chrome://browser/content/utilityOverlay.js
+		for(; node && "localName" in node; node = node.parentNode) {
+			var ln = node.localName;
+			if(
+				node.namespaceURI == "http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+				&& (ln == "menupopup" || ln == "popup" || ln == "panel")
+			)
+				node.hidePopup();
 		}
 	},
 
