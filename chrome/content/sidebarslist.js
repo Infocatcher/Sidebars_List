@@ -893,8 +893,10 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 	},
 	mouseOverHandler: function(e) {
 		this.sbBtnBox.removeEventListener("mouseover", this, false);
-		this._log(e.type + " on #" + this.sbBtnBox.id + " => initPopup()");
-		this.initPopup();
+		setTimeout(function(_this) { // Pseudo async
+			_this._log(e.type + " on #" + _this.sbBtnBox.id + " => initPopup()");
+			_this.initPopup();
+		}, 0, this);
 	},
 	setMoveLabel: function() {
 		var mi = this.c2sb;
