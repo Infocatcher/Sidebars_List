@@ -47,8 +47,8 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		if(this.isAustralis) {
 			window.addEventListener("ViewShowing", this, false);
 			window.addEventListener("ViewHiding", this, false);
-			if(this.sidebarsBnt)
-				this.sidebarsBnt.addEventListener("mouseover", this, false);
+			if(this.sbBtnBox)
+				this.sbBtnBox.addEventListener("mouseover", this, false);
 		}
 	},
 	destroy: function(force) {
@@ -56,8 +56,8 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		if(this.isAustralis) {
 			window.removeEventListener("ViewShowing", this, false);
 			window.removeEventListener("ViewHiding", this, false);
-			if(this.sidebarsBnt)
-				this.sidebarsBnt.removeEventListener("mouseover", this, false);
+			if(this.sbBtnBox)
+				this.sbBtnBox.removeEventListener("mouseover", this, false);
 		}
 
 		if(!force)
@@ -790,13 +790,13 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 	get browser() {
 		return window.gBrowser || getBrowser();
 	},
-	get sidebarsBnt() {
+	get sbBtnBox() {
 		// Note: button inside #PanelUI-button isn't available on window startup
-		var btn = this.$("sidebar-button") || this.$("PanelUI-button");
+		var btn = this.$("sidebar-button") || this.$("PanelUI-popup");
 		if(!btn)
 			return null;
-		delete this.sidebarsBnt;
-		return this.sidebarsBnt = btn;
+		delete this.sbBtnBox;
+		return this.sbBtnBox = btn;
 	},
 
 	addList: function(multiNum) {
@@ -889,7 +889,8 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		this.setDisableChecked();
 	},
 	mouseOverHandler: function(e) {
-		this.sidebarsBnt.removeEventListener("mouseover", this, false);
+		this.sbBtnBox.removeEventListener("mouseover", this, false);
+		this._log(e.type + " on #" + this.sbBtnBox.id + " => initPopup()");
 		this.initPopup();
 	},
 	setMoveLabel: function() {
