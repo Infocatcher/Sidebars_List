@@ -56,8 +56,7 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		if(this.isAustralis) {
 			window.removeEventListener("ViewShowing", this, false);
 			window.removeEventListener("ViewHiding", this, false);
-			if(this.sbBtnBox)
-				this.sbBtnBox.removeEventListener("mouseover", this, false);
+			this.destroySbBtnWatcher();
 		}
 
 		if(!force)
@@ -857,8 +856,7 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		this._log("initPopup()");
 		var popup = this.popup;
 
-		if(this.sbBtnBox)
-			this.sbBtnBox.removeEventListener("mouseover", this, false);
+		this.destroySbBtnWatcher();
 		popup.addEventListener("popuphidden", this, true);
 		popup.addEventListener(this.wheelEvent, this, true);
 
@@ -892,11 +890,14 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		this.setDisableChecked();
 	},
 	mouseOverHandler: function(e) {
-		this.sbBtnBox.removeEventListener("mouseover", this, false);
+		this.destroySbBtnWatcher();
 		setTimeout(function(_this) { // Pseudo async
 			_this._log(e.type + " on #" + _this.sbBtnBox.id + " => initPopup()");
 			_this.initPopup();
 		}, 0, this);
+	},
+	destroySbBtnWatcher: function() {
+		this.sbBtnBox && this.sbBtnBox.removeEventListener("mouseover", this, false);
 	},
 	setMoveLabel: function() {
 		var mi = this.c2sb;
