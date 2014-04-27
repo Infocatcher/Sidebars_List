@@ -854,8 +854,11 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		if(this.popupInitialized)
 			return;
 		this.popupInitialized = true;
+		this._log("initPopup()");
 		var popup = this.popup;
 
+		if(this.sbBtnBox)
+			this.sbBtnBox.removeEventListener("mouseover", this, false);
 		popup.addEventListener("popuphidden", this, true);
 		popup.addEventListener(this.wheelEvent, this, true);
 
