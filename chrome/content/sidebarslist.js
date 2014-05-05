@@ -1508,7 +1508,10 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 	},
 	setItem: function(it, newUri, curUri) {
 		var isBlank = this.isBlankPageURL(newUri);
-		it.setAttribute("disabled", isBlank || !newUri || newUri == curUri);
+		if(isBlank || !newUri || newUri == curUri)
+			it.setAttribute("disabled", "true");
+		else
+			it.removeAttribute("disabled");
 		it.tooltipText = isBlank ? "" : newUri;
 	},
 	isBlankPageURL: function(uri) {
