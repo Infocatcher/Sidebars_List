@@ -47,6 +47,15 @@
 .sidebarsList-contentToSidebar[disabled] .menu-iconic-icon {
 	opacity: 0.32;
 }
+/* Correct icons, no built-in styles for now (Firefox 32.0a1) */
+.sidebarsList-sidebarToContent.subviewbutton > .toolbarbutton-icon,
+.sidebarsList-contentToSidebar.subviewbutton > .toolbarbutton-icon {
+	-moz-margin-end: 5px !important;
+}
+.sidebarsList-sidebarToContent.subviewbutton > .toolbarbutton-text,
+.sidebarsList-contentToSidebar.subviewbutton > .toolbarbutton-text {
+	-moz-padding-start: 0 !important;
+}
 
 #sidebarsList-splitter {
 	cursor: pointer;
