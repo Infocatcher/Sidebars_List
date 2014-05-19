@@ -1543,6 +1543,15 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		if(getFullData) {
 			var label = this.getOrigTitle(this.multiNum);
 			var ttl = label && label.value || "";
+			if(!ttl) { // No title in collapsed sidebar
+				if(wpBrowser)
+					ttl = this.lastURI.title;
+				else {
+					var mis = this.popup.getElementsByAttribute("sidebarurl", sbUri);
+					if(mis.length)
+						ttl = mis[0].getAttribute("label");
+				}
+			}
 			return {
 				uri: sbUri,
 				title: ttl
