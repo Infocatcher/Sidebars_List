@@ -7,6 +7,7 @@
 
 ##### master/HEAD
 `*` Improved support for built-in “Sidebars” button in Firefox 30+ (<a href="https://github.com/Infocatcher/Sidebars_List/issues/7">#7</a>).<br>
+`*` Also show sidebar/page title (in addition to URL) in tooltip for “Open … in …” menu items.<br>
 
 ##### 0.2.0 (2014-03-04)
 `*` Now used hardcoded splitter width limit to improve startup performance.<br>
