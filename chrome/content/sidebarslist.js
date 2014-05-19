@@ -1492,27 +1492,34 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		};
 	},
 	_setContextCommands: function() {
-		var sbUri = this.getSbURI(true);
-		var cUri = content.location.href;
-		this.setItems(this.sb2c, sbUri, cUri);
-		this.setItems(this.c2sb, cUri, sbUri);
+		var sbData = this.getSbData();
+		var tabData = {
+			uri: content.location.href,
+			title: content.document.title
+		};
+		this.setItems(this.sb2c, sbData, tabData);
+		this.setItems(this.c2sb, tabData, sbData);
 	},
-	setItems: function(baseItem, newUri, curUri) {
+	setItems: function(baseItem, newData, curData) {
 		Array.forEach(
 			document.getElementsByClassName(baseItem.id),
 			function(it) {
-				this.setItem(it, newUri, curUri);
+				this.setItem(it, newData, curData);
 			},
 			this
 		);
 	},
-	setItem: function(it, newUri, curUri) {
-		var isBlank = this.isBlankPageURL(newUri);
-		if(isBlank || !newUri || newUri == curUri)
+	setItem: function(it, newData, curData) {
+		var isBlank = this.isBlankPageURL(newData.uri);
+		if(isBlank || !newData.uri || newData.uri == curData.uri)
 			it.setAttribute("disabled", "true");
 		else
 			it.removeAttribute("disabled");
-		it.tooltipText = isBlank ? "" : newUri;
+		it.tooltipText = isBlank
+			? ""
+			: newData.title && newData.title != newData.uri
+				? newData.title + " \n" + newData.uri
+				: newData.uri;
 	},
 	isBlankPageURL: function(uri) {
 		if("isBlankPageURL" in window)
@@ -1526,14 +1533,25 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 			? pn.__sidebarsList_multiNum
 			: null;
 	},
-	getSbURI: function() {
+	getSbURI: function(getFullData) {
 		var sb = this.currentSb || this.getSb(this.multiNum);
 		var sbUri = sb.getAttribute("src");
 		if(sbUri == "chrome://browser/content/web-panels.xul") {
 			var wpBrowser = sb.contentDocument.getElementById("web-panels-browser");
 			sbUri = wpBrowser ? wpBrowser.contentDocument.documentURI : "";
 		}
+		if(getFullData) {
+			var label = this.getOrigTitle(this.multiNum);
+			var ttl = label && label.value || "";
+			return {
+				uri: sbUri,
+				title: ttl
+			};
+		}
 		return sbUri;
+	},
+	getSbData: function() {
+		return this.getSbURI(true);
 	},
 
 	contentToSidebar: function(e) {
