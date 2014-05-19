@@ -1526,19 +1526,12 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 			? pn.__sidebarsList_multiNum
 			: null;
 	},
-	getSbURI: function(updContext) {
+	getSbURI: function() {
 		var sb = this.currentSb || this.getSb(this.multiNum);
 		var sbUri = sb.getAttribute("src");
 		if(sbUri == "chrome://browser/content/web-panels.xul") {
 			var wpBrowser = sb.contentDocument.getElementById("web-panels-browser");
 			sbUri = wpBrowser ? wpBrowser.contentDocument.documentURI : "";
-			if(updContext && sbUri == "about:blank") {
-				var _this = this;
-				wpBrowser.addEventListener("load", function updContext(e) {
-					wpBrowser.removeEventListener(e.type, updContext, true);
-					_this.setContextCommands();
-				}, true);
-			}
 		}
 		return sbUri;
 	},
