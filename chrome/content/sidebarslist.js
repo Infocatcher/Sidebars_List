@@ -709,6 +709,8 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		stl.setProperty("max-width", w + "px", "important");
 
 		var cs = win.getComputedStyle(spl, null);
+		// Note: there is weird bug with
+		// Warning: ReferenceError: reference to undefined property cs.borderLeftWidth
 		var borderLeft  = parseFloat(cs.borderLeftWidth);
 		var borderRight = parseFloat(cs.borderRightWidth);
 		if(w < borderLeft + borderRight) {
