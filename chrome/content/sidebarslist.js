@@ -186,6 +186,19 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		return this.isAustralis = "CustomizableUI" in window;
 	},
 
+	get currentURL() {
+		return content ? content.location.href : gBrowser.currentURI.spec;
+	},
+	get currentTitle() {
+		if(content)
+			return content.document.title;
+		var browser = gBrowser.selectedBrowser;
+		var contentWindow = browser.contentWindow || browser.contentWindowAsCPOW;
+		if(contentWindow)
+			return contentWindow.document.title;
+		return gBrowser.selectedTab.label; // Fallback
+	},
+
 	_sidebarHeaderCreated: false,
 	tweakSidebar: function(force) {
 		var hidden = this.sbBox.hidden;
@@ -1496,8 +1509,8 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 	_setContextCommands: function() {
 		var sbData = this.getSbData();
 		var tabData = {
-			uri: content.location.href,
-			title: content.document.title
+			uri:   this.currentURL,
+			title: this.currentTitle
 		};
 		this.setItems(this.sb2c, sbData, tabData);
 		this.setItems(this.c2sb, tabData, sbData);
@@ -1569,7 +1582,7 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		if(this.handleClickEvent(e))
 			return;
 		var _click = e && e.type == "click";
-		var url = content.location.href;
+		var url = this.currentURL;
 		var mis = this.popup.getElementsByAttribute("sidebarurl", url);
 		if(mis.length) {
 			var mi = mis[0];
@@ -1578,7 +1591,7 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		}
 		else {
 			this.setTargetSidebar("viewWebPanelsSidebar");
-			openWebPanel(content.document.title || url, url);
+			openWebPanel(this.currentTitle || url, url);
 		}
 		var move = this.pref("openTabInSidebarClosesTab");
 		if(
