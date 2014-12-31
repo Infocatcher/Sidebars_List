@@ -959,6 +959,23 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		this.initPopup();
 		this.initContext();
 		this.highlightFeatures(this.popup);
+
+		var sep = this.spl.previousSibling;
+		if(
+			sep
+			&& sep.localName == "menuseparator"
+			&& sep.classList && sep.classList.contains("social-provider-menu")
+		) {
+			var pn = e.currentTarget.parentNode;
+			var _this = this;
+			pn.addEventListener(e.type, function hideSep(e) {
+				pn.removeEventListener(e.type, hideSep, false);
+				if(!sep.hidden) {
+					sep.hidden = true;
+					_this._log("Force hide menuseparator.social-provider-menu");
+				}
+			}, false);
+		}
 	},
 	_restorePopupTimer: 0,
 	popupHiddenHandler: function(e) {
