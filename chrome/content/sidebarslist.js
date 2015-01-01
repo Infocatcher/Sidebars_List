@@ -1504,14 +1504,30 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		var mn = this.currentSbNum = this.multiNum;
 		var sb = this.currentSb = this.getSb(mn);
 		sb.addEventListener("load", this.setContextCommands, true);
-		gBrowser.addEventListener("load", this.setContextCommands, true);
+		//gBrowser.addEventListener("load", this.setContextCommands, true);
+		gBrowser.addProgressListener(this.progressListener);
 		this.setContextCommands();
 	},
 	destroyContext: function() {
 		this.currentSb.removeEventListener("load", this.setContextCommands, true);
-		gBrowser.removeEventListener("load", this.setContextCommands, true);
+		//gBrowser.removeEventListener("load", this.setContextCommands, true);
+		gBrowser.removeProgressListener(this.progressListener);
 		this.currentSb = null;
 		this.currentSbNum = null;
+	},
+	get progressListener() {
+		var dummy = function() {};
+		delete this.progressListener;
+		return this.progressListener = {
+			context: this,
+			onStateChange: dummy,
+			onProgressChange: dummy,
+			onLocationChange: function(webProgress, request, location) {
+				this.context.setContextCommands();
+			},
+			onStatusChange: dummy,
+			onSecurityChange: dummy
+		};
 	},
 	get setContextCommands() {
 		var _this = this;
