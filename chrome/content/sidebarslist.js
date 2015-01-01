@@ -801,9 +801,6 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 	getSbBox: function(n) {
 		return n > 1 ? this.$("sidebar-" + n + "-box") : this.sbBox;
 	},
-	get browser() {
-		return window.gBrowser || getBrowser();
-	},
 	get sbBtnBox() {
 		// Note: button inside #PanelUI-button isn't available on window startup
 		var btn = this.$("sidebar-button") || this.$("PanelUI-popup");
@@ -1507,12 +1504,12 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		var mn = this.currentSbNum = this.multiNum;
 		var sb = this.currentSb = this.getSb(mn);
 		sb.addEventListener("load", this.setContextCommands, true);
-		this.browser.addEventListener("load", this.setContextCommands, true);
+		gBrowser.addEventListener("load", this.setContextCommands, true);
 		this.setContextCommands();
 	},
 	destroyContext: function() {
 		this.currentSb.removeEventListener("load", this.setContextCommands, true);
-		this.browser.removeEventListener("load", this.setContextCommands, true);
+		gBrowser.removeEventListener("load", this.setContextCommands, true);
 		this.currentSb = null;
 		this.currentSbNum = null;
 	},
@@ -1685,12 +1682,11 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		var sbUri = this.getSbURI();
 		if(!sbUri)
 			return;
-		var tbr = this.browser;
 		if(_cmd && (e.ctrlKey || e.metaKey || e.altKey) || _click) {
 			var inBg = this.getPref("browser.tabs.loadInBackground");
-			var tab = tbr.addTab(sbUri);
+			var tab = gBrowser.addTab(sbUri);
 			if(_click && e.button == 2 ? !inBg : inBg)
-				tbr.selectedTab = tab;
+				gBrowser.selectedTab = tab;
 		}
 		else if(_cmd && e.shiftKey) {
 			window.openDialog(
@@ -1701,7 +1697,7 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 			);
 		}
 		else {
-			tbr.loadURI(sbUri);
+			gBrowser.loadURI(sbUri);
 		}
 		if(_click && this.pref("closeSidebarsMenu"))
 			this.closeMenus(e ? e.target : this.popup);
