@@ -1572,6 +1572,8 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		return uri == "about:blank";
 	},
 	decodeURI: function(uri) {
+		if(!this.pref("decodeURIs"))
+			return uri;
 		if("losslessDecodeURI" in window) try {
 			return losslessDecodeURI({ spec: uri });
 		}

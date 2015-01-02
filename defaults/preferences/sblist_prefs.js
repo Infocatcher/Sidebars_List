@@ -22,6 +22,7 @@ pref("extensions.sidebarslist.openTabInSidebarClosesTab.useMove", true); // Pres
 pref("extensions.sidebarslist.openTabInSidebarClosesTab.rightClickToInvert", false);
 pref("extensions.sidebarslist.reloadButtonStyle", "auto");
 // See styles for [sidebarslist_style="..."] in chrome://sidebarslist/content/sidebarslist.css
+pref("extensions.sidebarslist.decodeURIs", true);
 pref("extensions.sidebarslist.lastURI", "");
 
 // See https://developer.mozilla.org/en-US/docs/XUL/Tutorial/Keyboard_Shortcuts
