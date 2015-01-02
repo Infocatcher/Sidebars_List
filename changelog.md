@@ -6,6 +6,8 @@
 `*` - improved<br>
 
 ##### master/HEAD
+`x` Fixed compatibility with Electrolysis aka e10s (multi-process mode) (<a href="https://github.com/Infocatcher/Sidebars_List/issues/8">#8</a>).<br>
+
 ##### 0.2.1 (2014-05-21)
 `*` Improved support for built-in “Sidebars” button in Firefox 30+ (<a href="https://github.com/Infocatcher/Sidebars_List/issues/7">#7</a>).<br>
 `*` Also show sidebar/page title (in addition to URL) in tooltip for “Open … in …” menu items.<br>
