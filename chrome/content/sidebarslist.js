@@ -1,6 +1,6 @@
 window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 	prefNS: "extensions.sidebarslist.",
-	prefVer: 2,
+	prefVer: 3,
 
 	origTitles: [],
 	tbButtons: [],
@@ -1456,6 +1456,13 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		}
 		if(v < 2) { //= Added: 2013-12-30
 			this.set("splitterWidthFullScreen", this.get("splitterWidthMaximizedWindow"));
+		}
+		if(v < 3) { //= Added: 2015-01-03
+			var pName = this.prefNS + "defaultSidebarWidth";
+			if(this.prefSvc.prefHasUserValue(pName)) {
+				this.set("sidebarWidthDefault", this.getPref(pName));
+				this.prefSvc.clearUserPref(pName);
+			}
 		}
 		this.set("prefsVersion", this.prefVer);
 		setTimeout(function(_this) {
