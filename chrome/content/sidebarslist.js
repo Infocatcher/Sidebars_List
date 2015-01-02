@@ -704,12 +704,15 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		var spl = this.sbSplitter;
 		var win = spl.ownerDocument.defaultView;
 		var stl = spl.style;
+		var setProp = function(p, v) {
+			stl.setProperty(p, v, "important");
+		};
 
 		if(w <= 0) { // "width: 0" may not work on Linux with "-moz-appearance: splitter"
 			if(stl.visibility == "collapse")
 				return;
 			this._log("setSplitterWidth(): hide splitter");
-			stl.setProperty("visibility",  "collapse", "important");
+			setProp("visibility", "collapse");
 			return;
 		}
 		if(stl.width == w + "px" && stl.visibility != "collapse")
@@ -718,8 +721,8 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		this._log("setSplitterWidth(): update splitter width: " + w + "px");
 		if(spl.hasAttribute("style"))
 			spl.removeAttribute("style");
-		stl.setProperty("width",     w + "px", "important");
-		stl.setProperty("max-width", w + "px", "important");
+		setProp("width",     w + "px");
+		setProp("max-width", w + "px");
 
 		var cs = win.getComputedStyle(spl, null);
 		// Note: there is weird bug with
@@ -729,8 +732,8 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		if(w < borderLeft + borderRight) {
 			borderLeft  = Math.floor(w/2);
 			borderRight = w - borderLeft;
-			stl.setProperty("border-left-width",  borderLeft  + "px", "important");
-			stl.setProperty("border-right-width", borderRight + "px", "important");
+			setProp("border-left-width",  borderLeft  + "px");
+			setProp("border-right-width", borderRight + "px");
 		}
 
 		var realW = parseFloat(cs.width);
@@ -740,8 +743,8 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 			var dwr = dw - dwl;
 			var marginLeft  = parseFloat(cs.marginLeft)  - dwl;
 			var marginRight = parseFloat(cs.marginRight) - dwr;
-			stl.setProperty("margin-left",  marginLeft  + "px", "important");
-			stl.setProperty("margin-right", marginRight + "px", "important");
+			setProp("margin-left",  marginLeft  + "px");
+			setProp("margin-right", marginRight + "px");
 		}
 
 		if(byPrefChange && "TreeStyleTabService" in window) try {
