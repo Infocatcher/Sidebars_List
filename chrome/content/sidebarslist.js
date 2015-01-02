@@ -13,7 +13,7 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		window.removeEventListener("DOMContentLoaded", this, false);
 		window.addEventListener("load", this, false);
 
-		var v = this.pref("prefsVersion") || 0;
+		var v = this.get("prefsVersion") || 0;
 		if(v < this.prefVer)
 			this.prefsMigration(v);
 		this.prefSvc.addObserver(this.prefNS, this, false);
@@ -225,7 +225,7 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 	sbWidthLimitsRemoved: false,
 	removeSidebarWidthLimits: function(rmv) {
 		if(rmv === undefined)
-			rmv = this.pref("removeWidthLimits");
+			rmv = this.get("removeWidthLimits");
 		if(!rmv ^ this.sbWidthLimitsRemoved)
 			return;
 		this.sbWidthLimitsRemoved = rmv;
@@ -245,7 +245,7 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 	sbZoomFixed: false,
 	fixSidebarZoom: function(fix) {
 		if(fix === undefined)
-			fix = this.pref("fixSidebarZoom");
+			fix = this.get("fixSidebarZoom");
 		if(!fix ^ this.sbZoomFixed)
 			return;
 		this.sbZoomFixed = fix;
@@ -372,7 +372,7 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 	},
 	get clearSidebar() {
 		return this.sbCollapsable
-			&& this.pref("collapseSidebar.clearBeforeSwitch")
+			&& this.get("collapseSidebar.clearBeforeSwitch")
 			&& this.sbBox.hidden;
 	},
 	clearBrowser: function(br) {
@@ -494,7 +494,7 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 	},
 
 	get collapseSidebar() {
-		return this.pref("collapseSidebar");
+		return this.get("collapseSidebar");
 	},
 	sbCollapsable: false,
 	setCollapsableSidebar: function(collapsable) {
@@ -642,7 +642,7 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 			return;
 
 		if(disable == undefined)
-			disable = this.pref("disableOpened");
+			disable = this.get("disableOpened");
 		if(!(disable ^ this._disableChecked))
 			return;
 		this._disableChecked = disable;
@@ -692,12 +692,12 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 				? "FullScreenDOM"
 				: "FullScreen";
 		}
-		var w = this.pref(prefName) || 0;
+		var w = this.get(prefName) || 0;
 
 		var _w = Math.max(0, Math.min(this.maxSplitterWidth, w));
 		if(_w != w) {
 			w = _w;
-			this.pref(prefName, w);
+			this.set(prefName, w);
 			return; // => prefsChanged()
 		}
 
@@ -915,7 +915,7 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		var mi = this.c2sb;
 		if(!mi) // Preference changed, but menu item not yet created
 			return;
-		var move = this.pref("openTabInSidebarClosesTab") ? "Move" : "";
+		var move = this.get("openTabInSidebarClosesTab") ? "Move" : "";
 		mi.setAttribute("label", this.getLocalized("contentToSidebar" + move));
 		mi.setAttribute("accesskey", this.getLocalized("contentToSidebar" + move + "AccessKey"));
 	},
@@ -1087,7 +1087,7 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		this.attribute(thr, "onclick", "sidebarsList.stopOrReloadSidebar(event" + (n ? ", " + n : "") + ");");
 		this.property(thr, "tooltipText", this.getLocalized("stopOrReloadSidebar"));
 		this.property(thr, "className", (thr.className + " sidebarsList-reload").replace(/^\s+/, ""));
-		this.attribute(thr, "sidebarslist_style", this.pref("reloadButtonStyle") || "auto");
+		this.attribute(thr, "sidebarslist_style", this.get("reloadButtonStyle") || "auto");
 
 		var closeBtn = thr.nextSibling;
 		if(closeBtn && closeBtn.localName == "toolbarbutton" && !n) {
@@ -1164,7 +1164,7 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 	},
 
 	updateControlsStyle: function() {
-		var stl = this.pref("reloadButtonStyle") || "auto";
+		var stl = this.get("reloadButtonStyle") || "auto";
 		Array.forEach(
 			document.getElementsByAttribute("sidebarslist_style", "*"),
 			function(node) {
@@ -1174,7 +1174,7 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 	},
 	saveURI: function(uri, title) {
 		if(uri && uri != "about:blank")
-			this.pref("lastURI", uri + (title == undefined ? "" : "\n" + title));
+			this.set("lastURI", uri + (title == undefined ? "" : "\n" + title));
 	},
 	saveCurrentURI: function() {
 		var sb = this.sb;
@@ -1193,7 +1193,7 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		}
 	},
 	get lastURI() {
-		var data = (this.pref("lastURI") || "").split("\n", 2);
+		var data = (this.get("lastURI") || "").split("\n", 2);
 		return {
 			uri: data[0],
 			title: data[1] || "",
@@ -1209,7 +1209,7 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 	},
 	smartToggleSidebar: function(e) {
 		if(e && (e.button == 1 || e.button == 0 && e.ctrlKey)) // middle-click || ctrl+click
-			this.toggleSidebar(this.pref("middleClickSidebar"));
+			this.toggleSidebar(this.get("middleClickSidebar"));
 		else if(e && e.button == 2) // right-click
 			return; // show context menu
 		else {
@@ -1222,7 +1222,7 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 					if(mi && "doCommand" in mi)
 						mi.doCommand();
 					else
-						this.toggleSidebar(this.pref("middleClickSidebar"));
+						this.toggleSidebar(this.get("middleClickSidebar"));
 				}
 			}
 			else
@@ -1258,7 +1258,7 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		force && this.setCollapsableSidebar();
 	},
 	restoreSidebarWidth: function(n) {
-		var w = this.pref("defaultSidebarWidth");
+		var w = this.get("defaultSidebarWidth");
 		if(w <= 0)
 			return;
 		var minW = 20;
@@ -1305,7 +1305,7 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		if(
 			dis && (
 				!node.hasAttribute("sidebarslist_notstd")
-				|| this.pref("disableOpened.notStandard")
+				|| this.get("disableOpened.notStandard")
 			)
 		) {
 			node.setAttribute("disabled", "true");
@@ -1440,16 +1440,16 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 	},
 	prefsMigration: function(v) {
 		if(v < 1) { //= Added: 2012-08-27
-			var lastURI = this.getPref(this.prefNS + "lastURI") || ""; // this.pref() uses cache!
+			var lastURI = this.getPref(this.prefNS + "lastURI") || ""; // this.get() uses cache!
 			if(/^web-panel: (.+?)(?: @web-panel-title: (.*))?$/.test(lastURI))
 				this.saveURI(unescape(RegExp.$1), unescape(RegExp.$2 || ""));
 			else
 				this.saveURI(unescape(lastURI));
 		}
 		if(v < 2) { //= Added: 2013-12-30
-			this.pref("splitterWidthFullScreen", this.pref("splitterWidthMaximizedWindow"));
+			this.set("splitterWidthFullScreen", this.get("splitterWidthMaximizedWindow"));
 		}
-		this.pref("prefsVersion", this.prefVer);
+		this.set("prefsVersion", this.prefVer);
 		setTimeout(function(_this) {
 			_this.prefSvc.savePrefFile(null);
 		}, 0, this);
@@ -1458,46 +1458,51 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 	observe: function(subject, topic, pName) {
 		if(topic != "nsPref:changed")
 			return;
-		pName = pName.substr(this.prefNS.length);
-		this.prefsChanged(pName, this.readPref(pName));
+		var shortName = pName.substr(this.prefNS.length);
+		var val = this._prefs[shortName] = this.getPref(pName);
+		this.prefsChanged(shortName, val);
 	},
 	_prefs: { __proto__: null }, // Prefs cache
-	pref: function(pName, pVal) {
-		if(arguments.length == 2)
-			return this.setPref(this.prefNS + pName, pVal);
-		if(pName in this._prefs)
-			return this._prefs[pName];
-		return this.readPref(pName);
+	get: function(pName, defaultVal) {
+		var cache = this._prefs;
+		return pName in cache
+			? cache[pName]
+			: (cache[pName] = this.getPref(this.prefNS + pName, defaultVal));
 	},
-	readPref: function(pName) {
-		return this._prefs[pName] = this.getPref(this.prefNS + pName);
+	set: function(pName, val) {
+		return this.setPref(this.prefNS + pName, val);
 	},
-	getPref: function(pName, defaultVal) {
-		var ps = this.prefSvc;
+	getPref: function(pName, defaultVal, prefBranch) {
+		var ps = prefBranch || this.prefSvc;
 		switch(ps.getPrefType(pName)) {
-			case ps.PREF_STRING: return ps.getComplexValue(pName, Components.interfaces.nsISupportsString).data;
-			case ps.PREF_INT:    return ps.getIntPref(pName);
 			case ps.PREF_BOOL:   return ps.getBoolPref(pName);
-			default:             return defaultVal;
+			case ps.PREF_INT:    return ps.getIntPref(pName);
+			case ps.PREF_STRING: return ps.getComplexValue(pName, Components.interfaces.nsISupportsString).data;
 		}
+		return defaultVal;
 	},
-	setPref: function(pName, pVal, prefBranch) {
+	setPref: function(pName, val, prefBranch) {
 		var ps = prefBranch || this.prefSvc;
 		var pType = ps.getPrefType(pName);
-		var isNew = pType == ps.PREF_INVALID;
-		var vType = typeof pVal;
-		if(pType == ps.PREF_BOOL || isNew && vType == "boolean")
-			ps.setBoolPref(pName, pVal);
-		else if(pType == ps.PREF_INT || isNew && vType == "number")
-			ps.setIntPref(pName, pVal);
-		else if(pType == ps.PREF_STRING || isNew) {
-			var ss = Components.interfaces.nsISupportsString;
-			var str = Components.classes["@mozilla.org/supports-string;1"]
-				.createInstance(ss);
-			str.data = pVal;
-			ps.setComplexValue(pName, ss, str);
+		if(pType == ps.PREF_INVALID)
+			pType = this.getValueType(val);
+		switch(pType) {
+			case ps.PREF_BOOL:   ps.setBoolPref(pName, val); break;
+			case ps.PREF_INT:    ps.setIntPref(pName, val);  break;
+			case ps.PREF_STRING:
+				var ss = Components.interfaces.nsISupportsString;
+				var str = Components.classes["@mozilla.org/supports-string;1"]
+					.createInstance(ss);
+				str.data = val;
+				ps.setComplexValue(pName, ss, str);
 		}
-		return this;
+	},
+	getValueType: function(val) {
+		switch(typeof val) {
+			case "boolean": return this.prefSvc.PREF_BOOL;
+			case "number":  return this.prefSvc.PREF_INT;
+		}
+		return this.prefSvc.PREF_STRING;
 	},
 
 	initContext: function() {
@@ -1572,7 +1577,7 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		return uri == "about:blank";
 	},
 	decodeURI: function(uri) {
-		if(!this.pref("decodeURIs"))
+		if(!this.get("decodeURIs"))
 			return uri;
 		if("losslessDecodeURI" in window) try {
 			return losslessDecodeURI({ spec: uri });
@@ -1634,12 +1639,12 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 			this.setTargetSidebar("viewWebPanelsSidebar");
 			openWebPanel(this.currentTitle || url, url);
 		}
-		var move = this.pref("openTabInSidebarClosesTab");
+		var move = this.get("openTabInSidebarClosesTab");
 		if(
 			e && (
 				_click && (
 					e.button == 1
-					|| e.button == 2 && this.pref("openTabInSidebarClosesTab.rightClickToInvert")
+					|| e.button == 2 && this.get("openTabInSidebarClosesTab.rightClickToInvert")
 				)
 				|| e.ctrlKey || e.shiftKey || e.altKey || e.metaKey
 			)
@@ -1655,7 +1660,7 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 			};
 			if(
 				"_swapBrowserDocShells" in gBrowser
-				&& this.pref("openTabInSidebarClosesTab.useMove")
+				&& this.get("openTabInSidebarClosesTab.useMove")
 			) {
 				if("_blurTab" in gBrowser) {
 					gBrowser._blurTab(tab);
@@ -1689,7 +1694,7 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 				removeTab(tab);
 			}
 		}
-		if(_click && this.pref("closeSidebarsMenu"))
+		if(_click && this.get("closeSidebarsMenu"))
 			this.closeMenus(e ? e.target : this.popup);
 	},
 	setTargetSidebar: function(cmd) {
@@ -1726,7 +1731,7 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		else {
 			gBrowser.loadURI(sbUri);
 		}
-		if(_click && this.pref("closeSidebarsMenu"))
+		if(_click && this.get("closeSidebarsMenu"))
 			this.closeMenus(e ? e.target : this.popup);
 	},
 	handleClickEvent: function(e) {
@@ -1818,7 +1823,7 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 			var keyElt = document.createElement("key");
 			keyElt.id = "sidebarsList-key-" + kId;
 			keyElt.setAttribute("oncommand", keys[kId]);
-			var keyStr = this.pref("key." + kId);
+			var keyStr = this.get("key." + kId);
 			if(!keyStr) // Attribute key="key-node-id" is buggy, if one of key nodes isn't exist
 				keyElt.setAttribute("disabled", "true");
 			else {
@@ -1834,7 +1839,7 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 	},
 
 	_log: function() {
-		if(!this.pref("debug"))
+		if(!this.get("debug"))
 			return;
 		var cs = Components.classes["@mozilla.org/consoleservice;1"]
 			.getService(Components.interfaces.nsIConsoleService);
@@ -1844,7 +1849,7 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 			return d.toLocaleFormat("%M:%S:") + "000".substr(String(ms).length) + ms;
 		}
 		this._log = function() {
-			if(this.pref("debug"))
+			if(this.get("debug"))
 				cs.logStringMessage("[Sidebars List]: " + ts() + " " + Array.map(arguments, String).join("\n"));
 		};
 		this._log.apply(this, arguments);
