@@ -226,7 +226,7 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 	removeSidebarWidthLimits: function(rmv) {
 		if(rmv === undefined)
 			rmv = this.get("removeWidthLimits");
-		if(!rmv ^ this.sbWidthLimitsRemoved)
+		if(this.sbWidthLimitsRemoved == rmv)
 			return;
 		this.sbWidthLimitsRemoved = rmv;
 		var s = this.sb.style;
@@ -246,7 +246,7 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 	fixSidebarZoom: function(fix) {
 		if(fix === undefined)
 			fix = this.get("fixSidebarZoom");
-		if(!fix ^ this.sbZoomFixed)
+		if(this.sbZoomFixed == fix)
 			return;
 		this.sbZoomFixed = fix;
 		// Known issue: doesn't work for Ctrl+mouse wheel
@@ -501,7 +501,7 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		//~ todo: try preserve third party wrappers
 		if(collapsable == undefined)
 			collapsable = this.collapseSidebar;
-		if(!collapsable ^ this.sbCollapsable)
+		if(this.sbCollapsable == collapsable)
 			return;
 		this.sbCollapsable = collapsable;
 
@@ -618,8 +618,7 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		}
 
 		var cw = sb.contentWindow;
-		var wpCollapsable = "sidebarsListCollapsable" in cw;
-		if(!collapsable ^ wpCollapsable)
+		if("sidebarsListCollapsable" in cw == collapsable)
 			return;
 		if(collapsable)
 			cw.sidebarsListCollapsable = true;
@@ -643,7 +642,7 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 
 		if(disable == undefined)
 			disable = this.get("disableOpened");
-		if(!(disable ^ this._disableChecked))
+		if(this._disableChecked == disable)
 			return;
 		this._disableChecked = disable;
 
