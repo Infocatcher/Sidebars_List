@@ -9,6 +9,7 @@
 `x` Fixed compatibility with Electrolysis aka e10s (multi-process mode) (<a href="https://github.com/Infocatcher/Sidebars_List/issues/8">#8</a>).<br>
 `x` Hide useless second separator, if there is no third-party sidebar extensions.<br>
 `*` Updated icons for “Open Tab in Sidebar” and “Open Sidebar in Tab” menu items.<br>
+`*` Decode URLs in tooltip for “Open … in …” menu items (<em>extensions.sidebarslist.decodeURIs</em> preference).<br>
 
 ##### 0.2.1 (2014-05-21)
 `*` Improved support for built-in “Sidebars” button in Firefox 30+ (<a href="https://github.com/Infocatcher/Sidebars_List/issues/7">#7</a>).<br>
