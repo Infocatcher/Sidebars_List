@@ -1563,13 +1563,22 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		it.tooltipText = isBlank
 			? ""
 			: newData.title && newData.title != newData.uri
-				? newData.title + " \n" + newData.uri
-				: newData.uri;
+				? newData.title + " \n" + this.decodeURI(newData.uri)
+				: this.decodeURI(newData.uri);
 	},
 	isBlankPageURL: function(uri) {
 		if("isBlankPageURL" in window)
 			return isBlankPageURL(uri);
 		return uri == "about:blank";
+	},
+	decodeURI: function(uri) {
+		if("losslessDecodeURI" in window) try {
+			return losslessDecodeURI({ spec: uri });
+		}
+		catch(e) {
+			Components.utils.reportError(e);
+		}
+		return uri;
 	},
 
 	get multiNum() {
