@@ -1228,8 +1228,9 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 						this.toggleSidebar(this.get("middleClickSidebar"));
 				}
 			}
-			else
+			else {
 				toggleSidebar();
+			}
 		}
 	},
 	toggleSidebar: function(commandId) {
