@@ -1099,7 +1099,7 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 
 		if(!n || n == 2) {
 			var spl = this.$("sidebar" + (n ? "-" + n : "") + "-splitter");
-			this.attribute(spl, "ondblclick", "if(event.button == 0) sidebarsList.restoreSidebarWidth(" + (n || "") + ");");
+			this.attribute(spl, "ondblclick", "sidebarsList.sidebarResizerDblClick(event" + (n ? ", " + n : "") + ");");
 			if(!n)
 				this.attribute(spl, "onclick", "if(event.button == 1) sidebarsList.closeSidebar();");
 		}
@@ -1260,8 +1260,13 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		toggleSidebar();
 		force && this.setCollapsableSidebar();
 	},
-	restoreSidebarWidth: function(n) {
-		var w = this.get("defaultSidebarWidth");
+	sidebarResizerDblClick: function(e, n) {
+		if(e.button == 1)
+			return;
+		var w = this.get(e.button == 0 ? "defaultSidebarWidth" : "altSidebarWidth");
+		this.setSidebarWidth(w, n);
+	},
+	setSidebarWidth: function(w, n) {
 		if(w <= 0)
 			return;
 		var minW = 20;
