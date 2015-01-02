@@ -7,6 +7,7 @@
 
 ##### master/HEAD
 `x` Исправлена совместимость с Electrolysis aka e10s (мультипроцессный режим) (<a href="https://github.com/Infocatcher/Sidebars_List/issues/8">#8</a>).<br>
+`x` Добавлено скрытие бесполезного второго разделителя, если не установлено ни одного расширения с боковыми панелями.<br>
 
 ##### 0.2.1 (2014-05-21)
 `*` Улучшена поддержка встроенной кнопки «Боковые панели» в Firefox 30+ (<a href="https://github.com/Infocatcher/Sidebars_List/issues/7">#7</a>).<br>
