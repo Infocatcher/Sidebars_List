@@ -1263,7 +1263,7 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 	sidebarResizerDblClick: function(e, n) {
 		if(e.button == 1)
 			return;
-		var w = this.get(e.button == 0 ? "defaultSidebarWidth" : "altSidebarWidth");
+		var w = this.get(e.button == 0 ? "sidebarWidthDefault" : "sidebarWidthAlt");
 		this.setSidebarWidth(w, n);
 	},
 	setSidebarWidth: function(w, n) {
