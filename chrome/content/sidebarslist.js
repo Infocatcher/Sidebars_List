@@ -724,7 +724,7 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		var cs = win.getComputedStyle(spl, null);
 		// Note: there is weird bug with
 		// Warning: ReferenceError: reference to undefined property cs.borderLeftWidth
-		var borderLeft  = parseFloat(cs.borderLeftWidth);
+		var borderLeft  = parseFloat(cs.borderLeftWidth || 0);
 		var borderRight = parseFloat(cs.borderRightWidth);
 		if(w < borderLeft + borderRight) {
 			borderLeft  = Math.floor(w/2);
