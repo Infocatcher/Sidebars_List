@@ -9,9 +9,8 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 
 	popupId: "viewSidebarMenu",
 
-	instantInit: function() {
-		window.removeEventListener("DOMContentLoaded", this, false);
-		window.addEventListener("load", this, false);
+	init: function() {
+		window.addEventListener("unload", this, false);
 
 		var v = this.get("prefsVersion") || 0;
 		if(v < this.prefVer)
@@ -25,10 +24,6 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		document.insertBefore(style, document.documentElement);
 
 		this.multiSb = "MultiSidebar" in window;
-	},
-	init: function() {
-		window.removeEventListener("load", this, false);
-		window.addEventListener("unload", this, false);
 
 		this.createSplitter();
 		this.tweakSidebar();
@@ -118,8 +113,6 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 	},
 	handleEvent: function(e) {
 		switch(e.type) {
-			case "DOMContentLoaded": this.instantInit();          break;
-			case "load":             this.init();                 break;
 			case "unload":           this.destroy();              break;
 			case "popupshowing":     this.popupShowingHandler(e); break;
 			case "popuphidden":      this.popupHiddenHandler(e);  break;
@@ -1870,5 +1863,3 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		this._log.apply(this, arguments);
 	}
 };
-
-window.addEventListener("DOMContentLoaded", sidebarsList, false);

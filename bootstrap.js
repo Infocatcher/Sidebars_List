@@ -77,15 +77,15 @@ var sbListLoader = {
 
 	observe: function(subject, topic, data) {
 		if(topic == "domwindowopened")
-			subject.addEventListener("DOMContentLoaded", this, false);
+			subject.addEventListener("load", this, false);
 		//else if(topic == "domwindowclosed")
 		//	this.destroyWindow(subject, WINDOW_CLOSED);
 	},
 
 	handleEvent: function(e) {
-		if(e.type == "DOMContentLoaded") {
-			var window = e.originalTarget.defaultView;
-			window.removeEventListener("DOMContentLoaded", this, false);
+		if(e.type == "load") {
+			var window = e.currentTarget;
+			window.removeEventListener("load", this, false);
 			this.initWindow(window, WINDOW_LOADED);
 		}
 	},
@@ -108,12 +108,10 @@ var sbListLoader = {
 				}
 			});
 		}
-		sbl.instantInit();
-		if(reason != WINDOW_LOADED && window.document.readyState == "complete")
-			sbl.init();
+		sbl.init();
 	},
 	destroyWindow: function(window, reason) {
-		window.removeEventListener("DOMContentLoaded", this, false); // Window can be closed before DOMContentLoaded
+		window.removeEventListener("load", this, false); // Window can be closed before "load"
 		if(
 			reason != APP_SHUTDOWN
 			&& reason != WINDOW_CLOSED
