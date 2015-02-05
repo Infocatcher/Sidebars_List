@@ -773,7 +773,7 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 	},
 	get popup() {
 		delete this.popup;
-		return this.popup = this.$("viewSidebarMenu");
+		return this.popup = this.$(this.popupId);
 	},
 	get popupset() {
 		delete this.popupset;
