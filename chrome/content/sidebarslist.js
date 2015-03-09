@@ -296,7 +296,7 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		this.wrapFunction(window, "toggleSidebar", function(commandId, forceOpen) {
 			this.handleSidebarCommand(commandId, forceOpen);
 		});
-		if("SidebarUI" in window) { // Firefox 39+
+		if("SidebarUI" in window) { // Firefox 38+
 			this.wrapFunction(SidebarUI, "show", function(commandId) {
 				this.handleSidebarCommand(commandId, true);
 			});
@@ -331,7 +331,7 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 	},
 	removeSbWrappers: function() {
 		this.unwrapFunction(window, "toggleSidebar");
-		if("SidebarUI" in window) { // Firefox 39+
+		if("SidebarUI" in window) { // Firefox 38+
 			this.unwrapFunction(SidebarUI, "show");
 			this.unwrapFunction(SidebarUI, "hide");
 		}
@@ -833,7 +833,7 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 
 		var closeCmd = multiNum > 1
 			? "MultiSidebar.closeSidebarByPosition(" + multiNum + ");"
-			: "SidebarUI" in window // Firefox 39+
+			: "SidebarUI" in window // Firefox 38+
 				? "SidebarUI.hide();"
 				: "toggleSidebar();";
 		tbb.setAttribute("onclick", "if(event.button == 1 && event.target == this) " + closeCmd);
@@ -1238,7 +1238,7 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 				}
 			}
 			else {
-				if("SidebarUI" in window) // Firefox 39+
+				if("SidebarUI" in window) // Firefox 38+
 					SidebarUI.hide();
 				else
 					toggleSidebar();
@@ -1259,7 +1259,7 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 			new Function(commandId.substr(1))();
 			return;
 		}
-		if("SidebarUI" in window) // Firefox 39+
+		if("SidebarUI" in window) // Firefox 38+
 			SidebarUI.toggle(commandId);
 		else
 			toggleSidebar(commandId);
@@ -1273,7 +1273,7 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 				|| "button" in e && e.button == 1;
 		}
 		force && this.setCollapsableSidebar(false);
-		if("SidebarUI" in window) // Firefox 39+
+		if("SidebarUI" in window) // Firefox 38+
 			SidebarUI.hide();
 		else
 			toggleSidebar();
