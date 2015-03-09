@@ -296,6 +296,14 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		this.wrapFunction(window, "toggleSidebar", function(commandId, forceOpen) {
 			this.handleSidebarCommand(commandId, forceOpen);
 		});
+		if("SidebarUI" in window) { // Firefox 39+
+			this.wrapFunction(SidebarUI, "show", function(commandId) {
+				this.handleSidebarCommand(commandId, true);
+			});
+			this.wrapFunction(SidebarUI, "hide", function() {
+				this.handleSidebarCommand();
+			});
+		}
 		this.wrapFunction(window, "openWebPanel", function(aTitle, aURI) {
 			if(this.clearSidebar) {
 				var last = this.lastURI;
@@ -323,6 +331,10 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 	},
 	removeSbWrappers: function() {
 		this.unwrapFunction(window, "toggleSidebar");
+		if("SidebarUI" in window) { // Firefox 39+
+			this.unwrapFunction(SidebarUI, "show");
+			this.unwrapFunction(SidebarUI, "hide");
+		}
 		this.unwrapFunction(window, "openWebPanel");
 		this.unwrapFunction(window, "asyncOpenWebPanel");
 	},
