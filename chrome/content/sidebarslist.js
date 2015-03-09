@@ -294,44 +294,7 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 
 	addSbWrappers: function() {
 		this.wrapFunction(window, "toggleSidebar", function(commandId, forceOpen) {
-			if(commandId) {
-				this.tweakSidebar(true);
-				if(this.clearSidebar && commandId != this.lastCommand) {
-					this.clearBrowser(this.sb);
-					this._log("toggleSidebar(): clear sidebar");
-				}
-			}
-			else {
-				var cmd = this.sbBox.getAttribute("sidebarcommand");
-				if(!cmd || !this.$(cmd)) {
-					var url = this.sb.currentURI.spec;
-					this._log(
-						"toggleSidebar(): sidebar broadcaster not found, "
-						+ "sidebarcommand: \"" + cmd + "\", URL: " + url
-					);
-					if(!this.sbBox.hidden) {
-						var realCmd;
-						if(url == "chrome://browser/content/web-panels.xul")
-							realCmd = "viewWebPanelsSidebar";
-						else {
-							var mi = this.popup.getElementsByAttribute("sidebarurl", url)[0];
-							realCmd = mi && mi.getAttribute("observes");
-						}
-						if(realCmd && this.$(realCmd)) {
-							this.sbBox.setAttribute("sidebarcommand", realCmd);
-							this._log("toggleSidebar(): fix sidebar broadcaster: " + realCmd);
-						}
-					}
-				}
-			}
-			if(!forceOpen && (!commandId || this.sbBox.getAttribute("sidebarcommand") == commandId))
-				this.saveCurrentURI(); // To save new web panel location
-			// Note: Firefox is buggy itself with web panels
-			if(!commandId || commandId == "viewWebPanelsSidebar")
-				return;
-			var mi = this.popup.getElementsByAttribute("observes", commandId)[0];
-			if(mi)
-				this.saveURI(mi.getAttribute("sidebarurl"));
+			this.handleSidebarCommand(commandId, forceOpen);
 		});
 		this.wrapFunction(window, "openWebPanel", function(aTitle, aURI) {
 			if(this.clearSidebar) {
@@ -362,6 +325,46 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		this.unwrapFunction(window, "toggleSidebar");
 		this.unwrapFunction(window, "openWebPanel");
 		this.unwrapFunction(window, "asyncOpenWebPanel");
+	},
+	handleSidebarCommand: function(commandId, forceOpen) {
+		if(commandId) {
+			this.tweakSidebar(true);
+			if(this.clearSidebar && commandId != this.lastCommand) {
+				this.clearBrowser(this.sb);
+				this._log("toggleSidebar(): clear sidebar");
+			}
+		}
+		else {
+			var cmd = this.sbBox.getAttribute("sidebarcommand");
+			if(!cmd || !this.$(cmd)) {
+				var url = this.sb.currentURI.spec;
+				this._log(
+					"toggleSidebar(): sidebar broadcaster not found, "
+					+ "sidebarcommand: \"" + cmd + "\", URL: " + url
+				);
+				if(!this.sbBox.hidden) {
+					var realCmd;
+					if(url == "chrome://browser/content/web-panels.xul")
+						realCmd = "viewWebPanelsSidebar";
+					else {
+						var mi = this.popup.getElementsByAttribute("sidebarurl", url)[0];
+						realCmd = mi && mi.getAttribute("observes");
+					}
+					if(realCmd && this.$(realCmd)) {
+						this.sbBox.setAttribute("sidebarcommand", realCmd);
+						this._log("toggleSidebar(): fix sidebar broadcaster: " + realCmd);
+					}
+				}
+			}
+		}
+		if(!forceOpen && (!commandId || this.sbBox.getAttribute("sidebarcommand") == commandId))
+			this.saveCurrentURI(); // To save new web panel location
+		// Note: Firefox is buggy itself with web panels
+		if(!commandId || commandId == "viewWebPanelsSidebar")
+			return;
+		var mi = this.popup.getElementsByAttribute("observes", commandId)[0];
+		if(mi)
+			this.saveURI(mi.getAttribute("sidebarurl"));
 	},
 	get clearSidebar() {
 		return this.sbCollapsable
