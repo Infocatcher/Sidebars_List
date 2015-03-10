@@ -833,9 +833,7 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 
 		var closeCmd = multiNum > 1
 			? "MultiSidebar.closeSidebarByPosition(" + multiNum + ");"
-			: "SidebarUI" in window // Firefox 38+
-				? "SidebarUI.hide();"
-				: "toggleSidebar();";
+			: "sidebarsList.sidebar.hide();";
 		tbb.setAttribute("onclick", "if(event.button == 1 && event.target == this) " + closeCmd);
 
 		tbb.addEventListener("mousedown", this, true);
@@ -1238,10 +1236,7 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 				}
 			}
 			else {
-				if("SidebarUI" in window) // Firefox 38+
-					SidebarUI.hide();
-				else
-					toggleSidebar();
+				this.sidebar.hide();
 			}
 		}
 	},
@@ -1259,10 +1254,7 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 			new Function(commandId.substr(1))();
 			return;
 		}
-		if("SidebarUI" in window) // Firefox 38+
-			SidebarUI.toggle(commandId);
-		else
-			toggleSidebar(commandId);
+		this.sidebar.toggle(commandId);
 	},
 	closeSidebar: function(force) {
 		if(this.sbBox.hidden)
@@ -1273,11 +1265,24 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 				|| "button" in e && e.button == 1;
 		}
 		force && this.setCollapsableSidebar(false);
-		if("SidebarUI" in window) // Firefox 38+
-			SidebarUI.hide();
-		else
-			toggleSidebar();
+		this.sidebar.hide();
 		force && this.setCollapsableSidebar();
+	},
+	get sidebar() {
+		delete this.sidebar;
+		return this.sidebar = "SidebarUI" in window // Firefox 38+
+			? SidebarUI
+			: {
+				toggle: function(commandId) {
+					toggleSidebar(commandId);
+				},
+				show: function(commandId) {
+					toggleSidebar(commandId, true);
+				},
+				hide: function() {
+					toggleSidebar();
+				}
+			};
 	},
 	sidebarResizerDblClick: function(e, n) {
 		if(e.button == 1)
