@@ -1255,7 +1255,7 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 			}, this);
 			return;
 		}
-		else if(special == ">") {
+		if(special == ">") {
 			new Function(commandId.substr(1))();
 			return;
 		}
