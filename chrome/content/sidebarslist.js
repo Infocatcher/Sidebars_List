@@ -811,7 +811,7 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 	getSbBox: function(n) {
 		return n > 1 ? this.$("sidebar-" + n + "-box") : this.sbBox;
 	},
-	get sbHidden() {
+	get sbHidden() { // Note: like !SidebarUI.isOpen in Firefox 38+
 		return this.sbBox.hidden;
 	},
 	get sbBtnBox() {
