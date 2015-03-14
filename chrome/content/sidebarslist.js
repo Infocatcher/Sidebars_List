@@ -37,7 +37,7 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 	},
 	delayedInit: function() {
 		this.addSbWrappers();
-		if(!this._sidebarHeaderCreated && !this.sbBox.hidden)
+		if(!this._sidebarHeaderCreated && !this.sbHidden)
 			this.tweakSidebar();
 		if(this.isAustralis) {
 			window.addEventListener("ViewShowing", this, false);
@@ -194,7 +194,7 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 
 	_sidebarHeaderCreated: false,
 	tweakSidebar: function(force) {
-		var hidden = this.sbBox.hidden;
+		var hidden = this.sbHidden;
 		if(!force && hidden)
 			return;
 		this.setCollapsableSidebar();
@@ -354,7 +354,7 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 					"toggleSidebar(): sidebar broadcaster not found, "
 					+ "sidebarcommand: \"" + cmd + "\", URL: " + url
 				);
-				if(!this.sbBox.hidden) {
+				if(!this.sbHidden) {
 					var realCmd;
 					if(url == "chrome://browser/content/web-panels.xul")
 						realCmd = "viewWebPanelsSidebar";
@@ -381,7 +381,7 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 	get clearSidebar() {
 		return this.sbCollapsable
 			&& this.get("collapseSidebar.clearBeforeSwitch")
-			&& this.sbBox.hidden;
+			&& this.sbHidden;
 	},
 	clearBrowser: function(br) {
 		var doc = br.contentDocument;
@@ -811,6 +811,9 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 	getSbBox: function(n) {
 		return n > 1 ? this.$("sidebar-" + n + "-box") : this.sbBox;
 	},
+	get sbHidden() {
+		return this.sbBox.hidden;
+	},
 	get sbBtnBox() {
 		// Note: button inside #PanelUI-button isn't available on window startup
 		var btn = this.$("sidebar-button") || this.$("PanelUI-popup");
@@ -1223,7 +1226,7 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		else if(e && e.button == 2) // right-click
 			return; // show context menu
 		else {
-			if(this.sbBox.hidden) {
+			if(this.sbHidden) {
 				var last = this.lastURI;
 				if(last.isWeb)
 					openWebPanel(last.title, last.uri);
@@ -1257,7 +1260,7 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		this.sidebar.toggle(commandId);
 	},
 	closeSidebar: function(force) {
-		if(this.sbBox.hidden)
+		if(this.sbHidden)
 			return;
 		if(force && typeof force == "object") {
 			var e = force;
