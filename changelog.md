@@ -11,6 +11,8 @@
 `*` Updated icons for “Open Tab in Sidebar” and “Open Sidebar in Tab” menu items.<br>
 `*` Decode URLs in tooltip for “Open … in …” menu items (<em>extensions.sidebarslist.decodeURIs</em> preference).<br>
 `+` Right-double click on sidebar splitter/resizer to set alternative width (<em>extensions.sidebarslist.sidebarWidthAlt</em> preference).<br>
+`*` Simplified code around initialization.<br>
+`x` Fixed compatibility with Firefox 38+ (<a href="https://github.com/Infocatcher/Sidebars_List/issues/10">#10</a>).<br>
 
 ##### 0.2.1 (2014-05-21)
 `*` Improved support for built-in “Sidebars” button in Firefox 30+ (<a href="https://github.com/Infocatcher/Sidebars_List/issues/7">#7</a>).<br>
