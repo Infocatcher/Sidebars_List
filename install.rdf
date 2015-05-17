@@ -7,6 +7,7 @@
 		<em:id>sidebarsList@infocatcher</em:id>
 		<em:type>2</em:type>
 		<em:bootstrap>true</em:bootstrap>
+		<em:multiprocessCompatible>true</em:multiprocessCompatible>
 		<em:name>Sidebars List</em:name>
 		<em:version>0.2.1</em:version>
 		<em:description>Adds drop-down list to switch sidebars</em:description>
