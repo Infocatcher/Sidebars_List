@@ -6,6 +6,7 @@
 `*` - improved<br>
 
 ##### master/HEAD
+##### 0.2.2 (2015-05-17)
 `x` Fixed compatibility with Electrolysis aka e10s (multi-process mode) (<a href="https://github.com/Infocatcher/Sidebars_List/issues/8">#8</a>).<br>
 `x` Hide useless second separator, if there is no third-party sidebar extensions.<br>
 `*` Updated icons for “Open Tab in Sidebar” and “Open Sidebar in Tab” menu items.<br>
