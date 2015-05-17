@@ -132,7 +132,7 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		var act = addFlag ? "addEventListener" : "removeEventListener";
 		nodes.forEach(function(node) {
 			node[act](evtType, func, true);
-		}, this);
+		});
 	},
 	get hasMutationObserver() {
 		delete this.hasMutationObserver;
@@ -148,7 +148,7 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		nodes.forEach(function(node) {
 			var mo = node.__sidebarsList_mutationObserver = new MutationObserver(mutationsHandler);
 			mo.observe(node, options);
-		}, this);
+		});
 	},
 	removeAttrMutationObservers: function(nodes) {
 		nodes.forEach(function(node) {
