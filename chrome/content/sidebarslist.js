@@ -1621,8 +1621,8 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 	decodeURI: function(uri) {
 		if(!this.get("decodeURIs"))
 			return uri;
-		if("losslessDecodeURI" in window) try {
-			return losslessDecodeURI({ spec: uri });
+		if(uri && "losslessDecodeURI" in window) try {
+			return losslessDecodeURI(makeURI(uri));
 		}
 		catch(e) {
 			Components.utils.reportError(e);
