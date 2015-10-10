@@ -158,13 +158,17 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 			}
 		});
 	},
-	get sizeModeChangeEvent() {
-		delete this.sizeModeChangeEvent;
-		return this.sizeModeChangeEvent = parseFloat(
+	get platformVersion() {
+		delete this.platformVersion;
+		return this.platformVersion = parseFloat(
 			Components.classes["@mozilla.org/xre/app-info;1"]
 				.getService(Components.interfaces.nsIXULAppInfo)
 				.platformVersion
-		) >= 8
+		);
+	},
+	get sizeModeChangeEvent() {
+		delete this.sizeModeChangeEvent;
+		return this.sizeModeChangeEvent = this.platformVersion >= 8
 			? "sizemodechange"
 			: "resize";
 	},
@@ -695,9 +699,15 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		if(state == window.STATE_MAXIMIZED)
 			prefName += "MaximizedWindow";
 		else if(state == (window.STATE_FULLSCREEN || 4)) {
-			prefName += document.fullScreen || document.mozFullScreen
-				? "FullScreenDOM"
-				: "FullScreen";
+			var isDOMFullScreen = document.fullScreen || document.mozFullScreen;
+			prefName += isDOMFullScreen ? "FullScreenDOM" : "FullScreen";
+			if(!isDOMFullScreen && this.platformVersion >= 41) {
+				// Wait for document.mozFullScreen setup...
+				setTimeout(function(_this) {
+					if(document.fullScreen || document.mozFullScreen)
+						_this.setSplitterWidth();
+				}, 0, this);
+			}
 		}
 		var w = this.get(prefName) || 0;
 
