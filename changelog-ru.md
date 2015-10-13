@@ -7,6 +7,7 @@
 
 ##### master/HEAD
 `x` Исправлено декодирование адресов во всплывающей подсказке для пунктов меню «Открыть … в …» в Firefox 40+.<br>
+`x` Исправлено определение полноэкранных веб-приложений Firefox 41+ (<a href="https://github.com/Infocatcher/Sidebars_List/issues/12">#12</a>).<br>
 
 ##### 0.2.2 (2015-05-17)
 `x` Исправлена совместимость с Electrolysis aka e10s (мультипроцессный режим) (<a href="https://github.com/Infocatcher/Sidebars_List/issues/8">#8</a>).<br>

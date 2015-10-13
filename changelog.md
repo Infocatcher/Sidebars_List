@@ -7,6 +7,7 @@
 
 ##### master/HEAD
 `x` Correctly decode URLs in tooltip for “Open … in …” menu items in Firefox 40+.<br>
+`x` Fixed detection of full screen web applications in Firefox 41+ (<a href="https://github.com/Infocatcher/Sidebars_List/issues/12">#12</a>).<br>
 
 ##### 0.2.2 (2015-05-17)
 `x` Fixed compatibility with Electrolysis aka e10s (multi-process mode) (<a href="https://github.com/Infocatcher/Sidebars_List/issues/8">#8</a>).<br>
