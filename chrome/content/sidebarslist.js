@@ -703,8 +703,10 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 			if(!isDOMFullScreen && this.platformVersion >= 41) {
 				// Wait for document.mozFullScreen setup...
 				setTimeout(function(_this) {
-					if(document.fullScreen || document.mozFullScreen)
+					if(document.fullScreen || document.mozFullScreen) {
+						_this._log("setSplitterWidth(): Used hack to detect DOM fullscreen");
 						_this.setSplitterWidth();
+					}
 				}, 0, this);
 			}
 		}
