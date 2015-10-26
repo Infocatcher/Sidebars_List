@@ -21,7 +21,7 @@ function startup(params, reason) {
 			.replace(/^.* -> /, "")
 			.replace(/[^\/]+$/, "");
 
-	if(Services.vc.compare(Services.appinfo.platformVersion, "10.0") < 0) {
+	if(parseFloat(Services.appinfo.platformVersion) < 10) {
 		if(!("addBootstrappedManifestLocation" in Components.manager)) {
 			Components.utils.reportError("[Sidebars List] missing Components.manager.addBootstrappedManifestLocation()");
 			Services.prompt.alert(
@@ -33,7 +33,6 @@ function startup(params, reason) {
 			);
 			Components.utils.import("resource://gre/modules/AddonManager.jsm");
 			AddonManager.getAddonByID(params.id, function(addon) {
-				//addon.uninstall();
 				addon.userDisabled = true;
 			});
 			return;
@@ -44,7 +43,7 @@ function startup(params, reason) {
 	sbListLoader.init(reason);
 }
 function shutdown(params, reason) {
-	if(Services.vc.compare(Services.appinfo.platformVersion, "10.0") < 0)
+	if(parseFloat(Services.appinfo.platformVersion) < 10)
 		Components.manager.removeBootstrappedManifestLocation(params.installPath);
 
 	sbListLoader.destroy(reason);
