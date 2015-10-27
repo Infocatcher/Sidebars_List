@@ -1891,20 +1891,20 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		keyset.appendChild(df);
 	},
 
-	_log: function() {
+	_log: function(s) {
 		if(!this.get("debug"))
 			return;
 		var cs = Components.classes["@mozilla.org/consoleservice;1"]
 			.getService(Components.interfaces.nsIConsoleService);
-		function ts() {
+		var ts = function() {
 			var d = new Date();
 			var ms = d.getMilliseconds();
-			return d.toLocaleFormat("%M:%S:") + "000".substr(String(ms).length) + ms;
-		}
-		this._log = function() {
-			if(this.get("debug"))
-				cs.logStringMessage("[Sidebars List]: " + ts() + " " + Array.map(arguments, String).join("\n"));
+			return d.toLocaleFormat("%M:%S:") + "000".substr(String(ms).length) + ms + " ";
 		};
-		this._log.apply(this, arguments);
+		this._log = function(s) {
+			if(this.get("debug"))
+				cs.logStringMessage("[Sidebars List] " + ts() + s);
+		};
+		this._log(s);
 	}
 };
