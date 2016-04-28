@@ -6,6 +6,8 @@
 `*` - improved<br>
 
 ##### master/HEAD
+`x` Fixed compatibility with Electrolysis aka e10s (multi-process mode) in Firefox 47+ (unsafe CPOW usage).<br>
+
 ##### 0.2.3 (2015-10-27)
 `x` Correctly decode URLs in tooltip for “Open … in …” menu items in Firefox 40+.<br>
 `x` Fixed detection of full screen web applications in Firefox 41+ (<a href="https://github.com/Infocatcher/Sidebars_List/issues/12">#12</a>).<br>
