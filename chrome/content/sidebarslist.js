@@ -678,7 +678,7 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 	},
 	disableCheckedInPopup: function(popup, disable) {
 		var attr = disable ? "checked" : "sidebarslist_disabled";
-		Array.slice(popup.getElementsByAttribute(attr, "true"))
+		Array.prototype.slice.call(popup.getElementsByAttribute(attr, "true"))
 			.forEach(function(node) {
 				this.disableNode(node, disable);
 			}, this);
@@ -955,12 +955,12 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 
 		if(!force)
 			return;
-		Array.forEach(
+		Array.prototype.forEach.call(
 			popup.getElementsByTagName("*"),
 			function(node) {
 				if(node.hasAttribute("sidebarslist_disabled"))
 					this.disableNode(node, false);
-				Array.slice(node.attributes).forEach(function(attr) {
+				Array.prototype.slice.call(node.attributes).forEach(function(attr) {
 					var name = attr.name || "";
 					if(name.substr(0, 13) == "sidebarslist_" && name != "sidebarslist_allowContext")
 						node.removeAttribute(name);
@@ -1158,7 +1158,7 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		}
 	},
 	cleanupNodes: function() {
-		Array.slice(document.getElementsByAttribute("sidebarslist_tweaked", "true"))
+		Array.prototype.slice.call(document.getElementsByAttribute("sidebarslist_tweaked", "true"))
 			.forEach(function(node) {
 				node.removeAttribute("sidebarslist_tweaked");
 				if("__sidebarsList_origProps" in node) {
@@ -1188,7 +1188,7 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 
 	updateControlsStyle: function() {
 		var stl = this.get("reloadButtonStyle") || "auto";
-		Array.forEach(
+		Array.prototype.forEach.call(
 			document.getElementsByAttribute("sidebarslist_style", "*"),
 			function(node) {
 				node.setAttribute("sidebarslist_style", stl);
@@ -1437,7 +1437,7 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 			else
 				var n = trigger.__sidebarsList_multiNum;
 		}
-		Array.forEach(
+		Array.prototype.forEach.call(
 			mp.getElementsByTagName("menuitem"),
 			function(mi) {
 				if(mi.id && mi.id.indexOf("sidebarsList-") == 0)
@@ -1603,7 +1603,7 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		this.setItems(this.c2sb, tabData, sbData);
 	},
 	setItems: function(baseItem, newData, curData) {
-		Array.forEach(
+		Array.prototype.forEach.call(
 			document.getElementsByClassName(baseItem.id),
 			function(it) {
 				this.setItem(it, newData, curData);
