@@ -184,7 +184,7 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 	},
 
 	get currentURL() {
-		return content ? content.location.href : gBrowser.currentURI.spec;
+		return gBrowser.currentURI.spec;
 	},
 	get currentTitle() {
 		if("contentTitle" in gBrowser)
