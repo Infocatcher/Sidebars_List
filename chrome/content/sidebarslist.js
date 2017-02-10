@@ -187,10 +187,10 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		return content ? content.location.href : gBrowser.currentURI.spec;
 	},
 	get currentTitle() {
-		var contentDoc = content && content.document
-			|| gBrowser.contentDocument;
-		if(contentDoc)
-			return contentDoc.title;
+		if("contentTitle" in gBrowser)
+			return gBrowser.contentTitle;
+		if(gBrowser.contentDocument)
+			return gBrowser.contentDocument.title;
 		return gBrowser.selectedTab.label; // Fallback
 	},
 
