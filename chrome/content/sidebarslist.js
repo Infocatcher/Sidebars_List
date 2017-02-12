@@ -39,7 +39,7 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		this.addSbWrappers();
 		this.ensureSidebarTweaked() || setTimeout(function(_this) {
 			_this.ensureSidebarTweaked();
-		}, 20, this);
+		}, this.get("ensureSidebarRestoredDelay"), this);
 		if(this.isAustralis) {
 			window.addEventListener("ViewShowing", this, false);
 			window.addEventListener("ViewHiding", this, false);
