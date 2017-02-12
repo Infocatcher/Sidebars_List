@@ -7,6 +7,7 @@
 
 ##### master/HEAD
 `x` Fixed compatibility with Electrolysis aka e10s (multi-process mode) in Firefox 47+ (unsafe CPOW usage).<br>
+`x` Fixed compatibility with future Firefox versions: don't use Array generics like `Array.forEach()` (<a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1222547">bug 1222547</a>).<br>
 `x` Correctly initialise sidebar in case of slow restoring of opened sidebar on startup (<em>extensions.sidebarslist.ensureSidebarRestoredDelay</em> preference).<br>
 
 ##### 0.2.3 (2015-10-27)

@@ -7,6 +7,7 @@
 
 ##### master/HEAD
 `x` Исправлена совместимость с Electrolysis aka e10s (мультипроцессный режим) в Firefox 47+ (unsafe CPOW usage).<br>
+`x` Исправлена совместимость с будущими версиями Firefox: прекращено использование Array generics вида `Array.forEach()` (<a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1222547">bug 1222547</a>).<br>
 `x` Исправлена инициализация боковой панели в случае медленного восстановления открытой панели при запуске (настройка <em>extensions.sidebarslist.ensureSidebarRestoredDelay</em>).<br>
 
 ##### 0.2.3 (2015-10-27)
