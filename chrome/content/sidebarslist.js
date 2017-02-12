@@ -1732,6 +1732,7 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 					setTimeout(function() {
 						try {
 							wpBrowser.stop();
+							// Note: can only swap docshells between browsers in the same process
 							gBrowser._swapBrowserDocShells(tab, wpBrowser);
 						}
 						catch(e) {
