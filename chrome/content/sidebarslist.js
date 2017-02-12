@@ -37,8 +37,9 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 	},
 	delayedInit: function() {
 		this.addSbWrappers();
-		if(!this._sidebarHeaderCreated && !this.sbHidden)
-			this.tweakSidebar();
+		this.ensureSidebarTweaked() || setTimeout(function(_this) {
+			_this.ensureSidebarTweaked();
+		}, 20, this);
 		if(this.isAustralis) {
 			window.addEventListener("ViewShowing", this, false);
 			window.addEventListener("ViewHiding", this, false);
@@ -194,6 +195,11 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		return gBrowser.selectedTab.label; // Fallback
 	},
 
+	ensureSidebarTweaked: function() {
+		if(!this._sidebarHeaderCreated && !this.sbHidden)
+			this.tweakSidebar();
+		return this._sidebarHeaderCreated;
+	},
 	_sidebarHeaderCreated: false,
 	tweakSidebar: function(force) {
 		var hidden = this.sbHidden;
