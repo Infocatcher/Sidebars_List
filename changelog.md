@@ -7,6 +7,7 @@
 
 ##### master/HEAD
 `x` Fixed compatibility with Electrolysis aka e10s (multi-process mode) in Firefox 47+ (unsafe CPOW usage).<br>
+`x` Correctly initialise sidebar in case of slow restoring of opened sidebar on startup (<em>extensions.sidebarslist.ensureSidebarRestoredDelay</em> preference).<br>
 
 ##### 0.2.3 (2015-10-27)
 `x` Correctly decode URLs in tooltip for “Open … in …” menu items in Firefox 40+.<br>
