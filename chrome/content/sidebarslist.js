@@ -1905,7 +1905,7 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		var ts = function() {
 			var d = new Date();
 			var ms = d.getMilliseconds();
-			return d.toLocaleFormat("%M:%S:") + "000".substr(String(ms).length) + ms + " ";
+			return d.toTimeString().replace(/^.*\d+:(\d+:\d+).*$/, "$1") + ":" + "000".substr(("" + ms).length) + ms + " ";
 		};
 		this._log = function(s) {
 			if(this.get("debug"))
