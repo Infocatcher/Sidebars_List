@@ -17,11 +17,10 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 			this.prefsMigration(v);
 		this.prefSvc.addObserver(this.prefNS, this, false);
 
-		var style = document.createProcessingInstruction(
+		document.insertBefore(document.createProcessingInstruction(
 			"xml-stylesheet",
 			'href="chrome://sidebarslist/content/sidebarslist.css" type="text/css"'
-		);
-		document.insertBefore(style, document.documentElement);
+		), document.documentElement);
 
 		this.multiSb = "MultiSidebar" in window;
 
@@ -91,10 +90,10 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		for(var kId in this.keys)
 			this.rc(this.$("sidebarsList-key-" + kId));
 
-		for(var child = document.firstChild; child; child = child.nextSibling) {
+		for(var child = document.documentElement; child = child.previousSibling; ) {
 			if(
 				child.nodeType == child.PROCESSING_INSTRUCTION_NODE
-				&& child.data.indexOf("chrome://sidebarslist/") != -1
+				&& child.data.substr(0, 28) == 'href="chrome://sidebarslist/'
 			) {
 				this.rc(child);
 				break;
