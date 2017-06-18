@@ -839,7 +839,8 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 	},
 
 	addList: function(multiNum) {
-		var multiId = multiNum > 1 ? "-" + multiNum : "";
+		var isMulti = multiNum > 1;
+		var multiId = isMulti ? "-" + multiNum : "";
 
 		var tbb = document.createElement("toolbarbutton");
 		this.tbButtons.push(tbb);
@@ -849,7 +850,7 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		tbb.setAttribute("flex", "1");
 		tbb.setAttribute("context", this.popupId);
 
-		var closeCmd = multiNum > 1
+		var closeCmd = isMulti
 			? "MultiSidebar.closeSidebarByPosition(" + multiNum + ");"
 			: "sidebarsList.sidebar.hide();";
 		tbb.setAttribute("onclick", "if(event.button == 1 && event.target == this) " + closeCmd);
@@ -885,8 +886,14 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		else
 			ttl.addEventListener("DOMAttrModified", this, true);
 
-		var pn = ttl.parentNode;
-		pn.insertBefore(tbb, ttl);
+		var switcher = this.$("sidebar-switcher-target");
+		if(switcher && !isMulti) { // Firefox 55+
+			switcher.parentNode.insertBefore(tbb, switcher.nextSibling || switcher);
+			this.attribute(switcher, "flex", "0");
+		}
+		else {
+			ttl.parentNode.insertBefore(tbb, ttl);
+		}
 	},
 	popupInitialized: false,
 	initPopup: function() {
