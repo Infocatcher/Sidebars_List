@@ -1124,7 +1124,7 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		this.property(thr, "className", (thr.className + " sidebarsList-reload").replace(/^\s+/, ""));
 		this.attribute(thr, "sidebarslist_style", this.get("reloadButtonStyle") || "auto");
 
-		var closeBtn = thr.nextSibling;
+		var closeBtn = thr.parentNode.lastChild;
 		if(closeBtn && closeBtn.localName == "toolbarbutton" && !n) {
 			this.attribute(closeBtn, "oncommand", "sidebarsList.closeSidebar(event);");
 			this.attribute(closeBtn, "onclick", "if(event.button == 1) sidebarsList.closeSidebar(event);");
