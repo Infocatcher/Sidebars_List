@@ -4,6 +4,11 @@
 #sidebar-header > spacer[flex="1000"] { /* Firefox 55+ */
 	display: none;
 }
+#sidebar-icon {
+	/* Firefox 55+, try fix width of built-in menu-button */
+	min-width: 16px;
+	min-height: 16px;
+}
 .sidebarsList-reload {
 	padding: 0 !important;
 	margin: 0 3px !important;
