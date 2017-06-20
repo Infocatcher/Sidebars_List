@@ -1,7 +1,8 @@
 @namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
 
 .sidebarsList-originalTitle, /* Hide original label */
-#sidebar-header > spacer[flex="1000"] { /* Firefox 55+ */
+#sidebar-header > spacer[flex="1000"], /* Firefox 55+, useless with our menu-button */
+#sidebar-switcher-arrow { /* Firefox 55+, arrow on built-in menu-button */
 	display: none;
 }
 #sidebar-icon {
