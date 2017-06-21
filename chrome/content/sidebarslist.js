@@ -1110,10 +1110,33 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		sbBox.parentNode.insertBefore(sbSplitter, sbBox);
 		this.setSplitterWidth();
 		window.addEventListener(this.sizeModeChangeEvent, this, false);
+		// For "Move Sidebar to Right" in Firefox 55+
+		if(this.getPref("sidebar.position_start") === false)
+			sbSplitter.setAttribute("ordinal", 1000);
+		if(this.$("sidebar-switcher-target")) { // Firefox 55+
+			this.addAttrMutationObservers(
+				[sbSplitter], this.updateSplitterOrdinal, this,
+				{ attributeFilter: ["ordinal"] }
+			);
+		}
 	},
 	destroySplitter: function() {
 		window.removeEventListener(this.sizeModeChangeEvent, this, false);
 		this.sbSplitter.removeEventListener("contextmenu", this, true);
+		if(this.$("sidebar-switcher-target")) // Firefox 55+
+			this.removeAttrMutationObservers([this.sbSplitter]);
+	},
+	updateSplitterOrdinal: function(mutation) {
+		var sbSplitter = mutation.target;
+		if("__sidebarsList_ignore" in sbSplitter)
+			return;
+		if(this.getPref("sidebar.position_start") === false) {
+			sbSplitter.__sidebarsList_ignore = true;
+			setTimeout(function() {
+				delete sbSplitter.__sidebarsList_ignore;
+			}, 0);
+			sbSplitter.setAttribute("ordinal", 1000);
+		}
 	},
 	tweakSidebarControls: function(n) {
 		if(n == 1)
