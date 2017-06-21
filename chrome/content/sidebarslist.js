@@ -1098,6 +1098,10 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		if(e.target.id == "PanelUI-sidebar")
 			this.popupHiddenHandler();
 	},
+	get hasRightSidebar() { // Firefox 55+
+		delete this.hasRightSidebar;
+		return this.hasRightSidebar = "SidebarUI" in window && "reversePosition" in SidebarUI;
+	},
 	createSplitter: function() {
 		var sbSplitter = this.sbSplitter = document.createElement("splitter");
 		sbSplitter.id = "sidebarsList-splitter";
@@ -1110,10 +1114,9 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		sbBox.parentNode.insertBefore(sbSplitter, sbBox);
 		this.setSplitterWidth();
 		window.addEventListener(this.sizeModeChangeEvent, this, false);
-		// For "Move Sidebar to Right" in Firefox 55+
-		if(this.getPref("sidebar.position_start") === false)
-			sbSplitter.setAttribute("ordinal", 1000);
-		if(this.$("sidebar-switcher-target")) { // Firefox 55+
+		if(this.hasRightSidebar) {
+			if(this.getPref("sidebar.position_start") === false)
+				sbSplitter.setAttribute("ordinal", 1000);
 			this.addAttrMutationObservers(
 				[sbSplitter], this.updateSplitterOrdinal, this,
 				{ attributeFilter: ["ordinal"] }
@@ -1123,7 +1126,7 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 	destroySplitter: function() {
 		window.removeEventListener(this.sizeModeChangeEvent, this, false);
 		this.sbSplitter.removeEventListener("contextmenu", this, true);
-		if(this.$("sidebar-switcher-target")) // Firefox 55+
+		if(this.hasRightSidebar)
 			this.removeAttrMutationObservers([this.sbSplitter]);
 	},
 	updateSplitterOrdinal: function(mutation) {
