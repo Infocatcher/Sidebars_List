@@ -1102,6 +1102,9 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		delete this.hasRightSidebar;
 		return this.hasRightSidebar = "SidebarUI" in window && "reversePosition" in SidebarUI;
 	},
+	get isRightSidebar() {
+		return this.hasRightSidebar && !this.getPref("sidebar.position_start");
+	},
 	createSplitter: function() {
 		var sbSplitter = this.sbSplitter = document.createElement("splitter");
 		sbSplitter.id = "sidebarsList-splitter";
@@ -1115,7 +1118,7 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		this.setSplitterWidth();
 		window.addEventListener(this.sizeModeChangeEvent, this, false);
 		if(this.hasRightSidebar) {
-			if(this.getPref("sidebar.position_start") === false)
+			if(this.isRightSidebar)
 				sbSplitter.setAttribute("ordinal", 1000);
 			this.addAttrMutationObservers(
 				[sbSplitter], this.updateSplitterOrdinal, this,
@@ -1131,15 +1134,13 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 	},
 	updateSplitterOrdinal: function(mutation) {
 		var sbSplitter = mutation.target;
-		if("__sidebarsList_ignore" in sbSplitter)
+		if("__sidebarsList_ignore" in sbSplitter || !this.isRightSidebar)
 			return;
-		if(this.getPref("sidebar.position_start") === false) {
-			sbSplitter.__sidebarsList_ignore = true;
-			setTimeout(function() {
-				delete sbSplitter.__sidebarsList_ignore;
-			}, 0);
-			sbSplitter.setAttribute("ordinal", 1000);
-		}
+		sbSplitter.__sidebarsList_ignore = true;
+		setTimeout(function() {
+			delete sbSplitter.__sidebarsList_ignore;
+		}, 0);
+		sbSplitter.setAttribute("ordinal", 1000);
 	},
 	tweakSidebarControls: function(n) {
 		if(n == 1)
