@@ -5,11 +5,27 @@
 #sidebar-switcher-arrow { /* Firefox 55+, arrow on built-in menu-button */
 	display: none;
 }
+
+/* Tweaks for Firefox 55+ */
 #sidebar-icon {
-	/* Firefox 55+, try fix width of built-in menu-button */
+	/* Try fix width of built-in menu-button */
 	min-width: 16px;
 	min-height: 16px;
 }
+#sidebar-box[ordinal] > #sidebar-header {
+	/* Firefox 56+: restore old (and small) style */
+	font-size: 1em;
+	font-weight: normal;
+	padding: 0;
+}
+#sidebar-switcher-target {
+	margin: 0 3px;
+}
+#sidebar-close {
+	padding: 2px;
+	-moz-margin-end: 4px;
+}
+
 .sidebarsList-reload {
 	padding: 0 !important;
 	margin: 0 3px !important;
