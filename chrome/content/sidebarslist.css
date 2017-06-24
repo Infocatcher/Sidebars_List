@@ -27,8 +27,8 @@
 }
 
 .sidebarsList-reload {
-	padding: 0 !important;
-	margin: 0 3px !important;
+	padding: 2px !important;
+	margin: 0 1px !important;
 }
 .sidebarsList-reload:not([loading="true"]) {
 	list-style-image: url("icons16.png");
