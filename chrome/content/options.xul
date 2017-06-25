@@ -14,4 +14,14 @@
 	<setting pref="extensions.sidebarslist.splitterWidth" type="integer" title="&sbl.splitterWidth;"/>
 	<setting pref="extensions.sidebarslist.splitterWidthMaximizedWindow" type="integer" title="&sbl.splitterWidthMaximizedWindow;"/>
 	<setting pref="extensions.sidebarslist.splitterWidthFullScreen" type="integer" title="&sbl.splitterWidthFullScreen;"/>
+	<setting pref="extensions.sidebarslist.reloadButtonStyle" type="menulist"  title="&sbl.reloadButtonStyle;">
+		<menulist>
+			<menupopup>
+				<menuitem label="&sbl.reloadButtonStyle.auto;" value="auto" />
+				<menuitem label="&sbl.reloadButtonStyle.colorful;" value="colorful" />
+				<menuitem label="&sbl.reloadButtonStyle.black;" value="black" />
+				<menuitem label="&sbl.reloadButtonStyle.white;" value="white" />
+			</menupopup>
+		</menulist>
+	</setting>
 </vbox>

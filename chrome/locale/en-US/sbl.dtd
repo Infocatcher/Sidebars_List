@@ -4,3 +4,8 @@
 <!ENTITY sbl.splitterWidth "Splitter width">
 <!ENTITY sbl.splitterWidthMaximizedWindow "Splitter width in maximized window">
 <!ENTITY sbl.splitterWidthFullScreen "Splitter width in full screen mode">
+<!ENTITY sbl.reloadButtonStyle "Icon for “Reload” button:">
+<!ENTITY sbl.reloadButtonStyle.auto "Auto">
+<!ENTITY sbl.reloadButtonStyle.colorful "Colorful">
+<!ENTITY sbl.reloadButtonStyle.black "Black">
+<!ENTITY sbl.reloadButtonStyle.white "White">

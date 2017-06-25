@@ -4,3 +4,8 @@
 <!ENTITY sbl.splitterWidth "Ширина переключателя">
 <!ENTITY sbl.splitterWidthMaximizedWindow "Ширина переключателя в развернутом окне">
 <!ENTITY sbl.splitterWidthFullScreen "Ширина переключателя в полноэкранном режиме">
+<!ENTITY sbl.reloadButtonStyle "Иконка кнопки «Обновить»:">
+<!ENTITY sbl.reloadButtonStyle.auto "Автоматически">
+<!ENTITY sbl.reloadButtonStyle.colorful "Цветная">
+<!ENTITY sbl.reloadButtonStyle.black "Чёрная">
+<!ENTITY sbl.reloadButtonStyle.white "Белая">
