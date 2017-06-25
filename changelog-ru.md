@@ -7,6 +7,8 @@
 
 ##### master/HEAD
 `x` Исправлена совместимость с будущими версиями Firefox: прекращено использование `Date.prototype.toLocaleFormat()` в отладочных логах (<em>extensions.sidebarslist.debug</em> = true) (<a href="https://bugzilla.mozilla.org/show_bug.cgi?id=818634">bug 818634</a>).<br>
+`x` Исправлена совместимость с Firefox 55+ (поддержка нового переключателя боковых панелей и команды «Переместить боковую панель вправо») (<a href="https://github.com/Infocatcher/Sidebars_List/issues/14">#14</a>).<br>
+`+` Добавлен интерфейс для изменения настройки <em>extensions.sidebarslist.reloadButtonStyle</em>.<br>
 
 ##### 0.2.4 (2017-02-12)
 `x` Исправлена совместимость с Electrolysis aka e10s (мультипроцессный режим) в Firefox 47+ (unsafe CPOW usage).<br>

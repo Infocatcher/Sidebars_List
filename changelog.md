@@ -7,6 +7,8 @@
 
 ##### master/HEAD
 `x` Fixed compatibility with future Firefox versions: don't use deprecated `Date.prototype.toLocaleFormat()` in debug logs (<em>extensions.sidebarslist.debug</em> = true) (<a href="https://bugzilla.mozilla.org/show_bug.cgi?id=818634">bug 818634</a>).<br>
+`x` Fixed compatibility with Firefox 55+ (support for new sidebars switcher and “Move Sidebar to Right” command) (<a href="https://github.com/Infocatcher/Sidebars_List/issues/14">#14</a>).<br>
+`+` Added UI for <em>extensions.sidebarslist.reloadButtonStyle</em> preference.<br>
 
 ##### 0.2.4 (2017-02-12)
 `x` Fixed compatibility with Electrolysis aka e10s (multi-process mode) in Firefox 47+ (unsafe CPOW usage).<br>
