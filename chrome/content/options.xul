@@ -5,15 +5,15 @@
 	if(top.location.href == "chrome://sidebarslist/content/options.xul") {
 		var opener = top.opener || top;
 		top.close();
-		opener.alert("Doesn't work in Firefox 3.6 and older, see extensions.sidebarslist.* on about:config page");
+		opener.alert("Doesn't work in Firefox 3.6 and older, see extensions.sidebarslist.* in about:config page");
 	}
 	</script>
-	<setting pref="extensions.sidebarslist.disableOpened" type="bool" title="&sbl.disableOpened;"/>
+	<setting pref="extensions.sidebarslist.disableOpened" type="bool" title="&sbl.disableOpened;" />
 	<setting pref="extensions.sidebarslist.collapseSidebar" type="bool" title="&sbl.collapseSidebar;"/>
-	<setting pref="extensions.sidebarslist.openTabInSidebarClosesTab" type="bool" title="&sbl.openTabInSidebarClosesTab;"/>
-	<setting pref="extensions.sidebarslist.splitterWidth" type="integer" title="&sbl.splitterWidth;"/>
-	<setting pref="extensions.sidebarslist.splitterWidthMaximizedWindow" type="integer" title="&sbl.splitterWidthMaximizedWindow;"/>
-	<setting pref="extensions.sidebarslist.splitterWidthFullScreen" type="integer" title="&sbl.splitterWidthFullScreen;"/>
+	<setting pref="extensions.sidebarslist.openTabInSidebarClosesTab" type="bool" title="&sbl.openTabInSidebarClosesTab;" />
+	<setting pref="extensions.sidebarslist.splitterWidth" type="integer" title="&sbl.splitterWidth;" />
+	<setting pref="extensions.sidebarslist.splitterWidthMaximizedWindow" type="integer" title="&sbl.splitterWidthMaximizedWindow;" />
+	<setting pref="extensions.sidebarslist.splitterWidthFullScreen" type="integer" title="&sbl.splitterWidthFullScreen;" />
 	<setting pref="extensions.sidebarslist.reloadButtonStyle" type="menulist"  title="&sbl.reloadButtonStyle;">
 		<menulist>
 			<menupopup>
