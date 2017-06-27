@@ -886,13 +886,13 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		else
 			ttl.addEventListener("DOMAttrModified", this, true);
 
-		var switcher = this.$("sidebar-switcher-target");
-		if(switcher && !isMulti) { // Firefox 55+
-			switcher.parentNode.insertBefore(tbb, switcher.nextSibling || switcher);
-			this.attribute(switcher, "flex", "0");
+		var header = ttl.parentNode;
+		if(header.id == "sidebar-switcher-target") { // Firefox 55+
+			header.parentNode.insertBefore(tbb, header.nextSibling);
+			this.attribute(header, "flex", "0");
 		}
 		else {
-			ttl.parentNode.insertBefore(tbb, ttl);
+			header.insertBefore(tbb, ttl);
 		}
 	},
 	popupInitialized: false,
