@@ -1134,6 +1134,7 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 	},
 	moveSplitterToRight: function() {
 		this.sbSplitter.setAttribute("ordinal", 1000);
+		this._log("moveSplitterToRight()");
 	},
 	updateSplitterOrdinal: function(mutation) {
 		var sbSplitter = mutation.target;
@@ -1143,6 +1144,7 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		setTimeout(function() {
 			delete sbSplitter.__sidebarsList_ignore;
 		}, 0);
+		this._log("updateSplitterOrdinal(): ordinal changed to " + sbSplitter.getAttribute("ordinal"));
 		this.moveSplitterToRight();
 	},
 	tweakSidebarControls: function(n) {
