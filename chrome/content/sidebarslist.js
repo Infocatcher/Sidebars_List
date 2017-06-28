@@ -1119,7 +1119,7 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		window.addEventListener(this.sizeModeChangeEvent, this, false);
 		if(this.hasRightSidebar) {
 			if(this.isRightSidebar)
-				sbSplitter.setAttribute("ordinal", 1000);
+				this.moveSplitterToRight();
 			this.addAttrMutationObservers(
 				[sbSplitter], this.updateSplitterOrdinal, this,
 				{ attributeFilter: ["ordinal"] }
@@ -1132,6 +1132,9 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		if(this.hasRightSidebar)
 			this.removeAttrMutationObservers([this.sbSplitter]);
 	},
+	moveSplitterToRight: function() {
+		this.sbSplitter.setAttribute("ordinal", 1000);
+	},
 	updateSplitterOrdinal: function(mutation) {
 		var sbSplitter = mutation.target;
 		if("__sidebarsList_ignore" in sbSplitter || !this.isRightSidebar)
@@ -1140,7 +1143,7 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		setTimeout(function() {
 			delete sbSplitter.__sidebarsList_ignore;
 		}, 0);
-		sbSplitter.setAttribute("ordinal", 1000);
+		this.moveSplitterToRight();
 	},
 	tweakSidebarControls: function(n) {
 		if(n == 1)
