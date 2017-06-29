@@ -1849,7 +1849,7 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		var spl = this.sbSplitter;
 		this.ensurePopupPosition();
 		document.popupNode = spl;
-		popup.openPopup(spl, "end_before", false);
+		popup.openPopup(spl, this.isRightSidebar ? "start_before" : "end_before", false);
 		// Select first menuitem
 		// Unfortunately ordinal popup doesn't have nsIMenuBoxObject interface with activeChild field
 		setTimeout(function() {
