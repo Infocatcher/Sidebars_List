@@ -1180,9 +1180,10 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 	},
 	saveOrig: function(node, name, isProp) {
 		var key = isProp ? "__sidebarsList_origProps" : "__sidebarsList_origAttrs";
-		if(!(key in node)) {
+		var o = node[key] || null;
+		if(!o) {
 			node.setAttribute("sidebarslist_tweaked", "true");
-			node[key] = {
+			o = node[key] = {
 				restore: { __proto__: null },
 				remove: [],
 				__proto__: null
@@ -1190,15 +1191,15 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		}
 		if(isProp) {
 			if(name in node)
-				node[key].restore[name] = node[name];
+				o.restore[name] = node[name];
 			else
-				node[key].remove.push(name);
+				o.remove.push(name);
 		}
 		else {
 			if(node.hasAttribute(name))
-				node[key].restore[name] = node.getAttribute(name);
+				o.restore[name] = node.getAttribute(name);
 			else
-				node[key].remove.push(name);
+				o.remove.push(name);
 		}
 	},
 	cleanupNodes: function() {
