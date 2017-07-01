@@ -1202,33 +1202,34 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 				o.remove.push(name);
 		}
 	},
+	restoreOrig: function(node) {
+		node.removeAttribute("sidebarslist_tweaked");
+		if("__sidebarsList_origProps" in node) {
+			var o = node.__sidebarsList_origProps;
+			delete node.__sidebarsList_origProps;
+			var restore = o.restore;
+			for(var name in restore)
+				node[name] = restore[name];
+			o.remove.forEach(function(name) {
+				delete node[name];
+			});
+		}
+		if("__sidebarsList_origAttrs" in node) {
+			var o = node.__sidebarsList_origAttrs;
+			delete node.__sidebarsList_origAttrs;
+			var restore = o.restore;
+			for(var name in restore)
+				node.setAttribute(name, restore[name]);
+			o.remove.forEach(function(name) {
+				// removeAttribute() doesn't remove already "used" handler in Firefox 20+
+				node.setAttribute(name, "");
+				node.removeAttribute(name);
+			});
+		}
+	},
 	cleanupNodes: function() {
 		Array.prototype.slice.call(document.getElementsByAttribute("sidebarslist_tweaked", "true"))
-			.forEach(function(node) {
-				node.removeAttribute("sidebarslist_tweaked");
-				if("__sidebarsList_origProps" in node) {
-					var o = node.__sidebarsList_origProps;
-					delete node.__sidebarsList_origProps;
-					var restore = o.restore;
-					for(var name in restore)
-						node[name] = restore[name];
-					o.remove.forEach(function(name) {
-						delete node[name];
-					});
-				}
-				if("__sidebarsList_origAttrs" in node) {
-					var o = node.__sidebarsList_origAttrs;
-					delete node.__sidebarsList_origAttrs;
-					var restore = o.restore;
-					for(var name in restore)
-						node.setAttribute(name, restore[name]);
-					o.remove.forEach(function(name) {
-						// removeAttribute() doesn't remove already "used" handler in Firefox 20.0a1
-						node.setAttribute(name, "");
-						node.removeAttribute(name);
-					});
-				}
-			});
+			.forEach(this.restoreOrig);
 	},
 
 	updateControlsStyle: function() {
