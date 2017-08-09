@@ -159,11 +159,13 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		});
 	},
 	get platformVersion() {
+		var appInfo = Components.classes["@mozilla.org/xre/app-info;1"]
+			.getService(Components.interfaces.nsIXULAppInfo);
 		delete this.platformVersion;
 		return this.platformVersion = parseFloat(
-			Components.classes["@mozilla.org/xre/app-info;1"]
-				.getService(Components.interfaces.nsIXULAppInfo)
-				.platformVersion
+			appInfo.name == "Pale Moon"
+				? appInfo.version
+				: appInfo.platformVersion
 		);
 	},
 	get sizeModeChangeEvent() {
