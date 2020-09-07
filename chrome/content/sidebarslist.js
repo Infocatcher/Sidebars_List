@@ -161,12 +161,11 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 	get platformVersion() {
 		var appInfo = Components.classes["@mozilla.org/xre/app-info;1"]
 			.getService(Components.interfaces.nsIXULAppInfo);
+		var pv = parseFloat(appInfo.platformVersion);
+		if(appInfo.name == "Pale Moon" || appInfo.name == "Basilisk")
+			pv = pv >= 4.1 ? 56 : 28;
 		delete this.platformVersion;
-		return this.platformVersion = parseFloat(
-			appInfo.name == "Pale Moon"
-				? appInfo.version
-				: appInfo.platformVersion
-		);
+		return this.platformVersion = pv;
 	},
 	get sizeModeChangeEvent() {
 		delete this.sizeModeChangeEvent;
