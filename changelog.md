@@ -6,6 +6,8 @@
 `*` - improved<br>
 
 ##### master/HEAD
+`*` Improved compatibility with Pale Moon and Basilisk.<br>
+
 ##### 0.2.5 (2017-07-03)
 `x` Fixed compatibility with future Firefox versions: don't use deprecated `Date.prototype.toLocaleFormat()` in debug logs (<em>extensions.sidebarslist.debug</em> = true) (<a href="https://bugzilla.mozilla.org/show_bug.cgi?id=818634">bug 818634</a>).<br>
 `x` Fixed compatibility with Firefox 55+ (support for new sidebars switcher and “Move Sidebar to Right” command) (<a href="https://github.com/Infocatcher/Sidebars_List/issues/14">#14</a>).<br>
