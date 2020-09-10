@@ -703,12 +703,12 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		if(state == window.STATE_MAXIMIZED)
 			prefName += "MaximizedWindow";
 		else if(state == (window.STATE_FULLSCREEN || 4)) {
-			var isDOMFullScreen = document.fullScreen || document.mozFullScreen;
-			prefName += isDOMFullScreen ? "FullScreenDOM" : "FullScreen";
-			if(!isDOMFullScreen && this.platformVersion >= 41) {
+			var isDFS = this.isDOMFullScreen;
+			prefName += isDFS ? "FullScreenDOM" : "FullScreen";
+			if(!isDFS && this.platformVersion >= 41) {
 				// Wait for document.mozFullScreen setup...
 				setTimeout(function(_this) {
-					if(document.fullScreen || document.mozFullScreen) {
+					if(_this.isDOMFullScreen) {
 						_this._log("setSplitterWidth(): Used hack to detect DOM fullscreen");
 						_this.setSplitterWidth();
 					}
@@ -779,6 +779,9 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		catch(e) {
 			Components.utils.reportError(e);
 		}
+	},
+	get isDOMFullScreen() {
+		return document.fullScreen || document.mozFullScreen;
 	},
 	sizeModeChanged: function(e) {
 		if(this.windowState != this._lastWindowState)
