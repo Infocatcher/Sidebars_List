@@ -781,7 +781,8 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		}
 	},
 	get isDOMFullScreen() {
-		return document.fullScreen || document.mozFullScreen;
+		return document.fullScreen || document.mozFullScreen
+			|| "fullscreenElement" in document && !!document.fullscreenElement;
 	},
 	sizeModeChanged: function(e) {
 		if(this.windowState != this._lastWindowState)
