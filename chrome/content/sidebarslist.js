@@ -734,14 +734,14 @@ window.sidebarsList = { // var sidebarsList = ... can't be deleted!
 		if(w <= 0) { // "width: 0" may not work on Linux with "-moz-appearance: splitter"
 			if(stl.visibility == "collapse")
 				return;
-			this._log("setSplitterWidth(): hide splitter");
+			this._log("setSplitterWidth(): hide splitter (" + prefName + ")");
 			setProp("visibility", "collapse");
 			return;
 		}
 		if(stl.width == w + "px" && stl.visibility != "collapse")
 			return;
 
-		this._log("setSplitterWidth(): update splitter width: " + w + "px");
+		this._log("setSplitterWidth(): update splitter width: " + w + "px (" + prefName + ")");
 		if(spl.hasAttribute("style"))
 			spl.removeAttribute("style");
 		setProp("width",     w + "px");
